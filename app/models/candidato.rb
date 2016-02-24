@@ -115,50 +115,131 @@ class Candidato
     return
   end
 
-  def self.pega_o_html_do_candidato_e_salva seqCandidato
+  def self.pega_o_html_do_candidatos_e_salva
 
-    url = "http://inter01.tse.jus.br/spceweb.consulta.receitasdespesas2014/resumoReceitasByCandidato.action"
+    Candidato.where(:html=>nil).distinct(:sequencial).each do |seqCandidato|
 
-    params = { "sqCandidato" => seqCandidato,
-              "sgUe" => "",
-              "sgUfMunicipio"=> "",
-              "filtro" => "S",
-              "tipoEntrega" => "0"}
+      puts "------------ buscando sequencial ----> #{seqCandidato} --------------"
+      url = "http://inter01.tse.jus.br/spceweb.consulta.receitasdespesas2014/resumoReceitasByCandidato.action"
 
-    response = Net::HTTP.post_form(URI.parse(url),params)
+      params = { "sqCandidato" => seqCandidato,
+                "sgUe" => "",
+                "sgUfMunicipio"=> "",
+                "filtro" => "S",
+                "tipoEntrega" => "0"}
 
-    html = response.body
+      begin
+        response = Net::HTTP.post_form(URI.parse(url),params)
+        puts "response ok"
+      rescue
+        puts '!!!!!!!!!! BODEEEEEEEEEEE !!!!!!'
+        next
+      end
 
-    pagina = Nokogiri::HTML(html)
+      html = response.body
 
-    numero = pagina.css('.clsCabecalhoCol00')[0]['value']
-    nome_civil = pagina.css('.clsCabecalhoCol00')[1]['value']
-    nome_civil_sem_acentos = I18n.transliterate(nome_civil)
-    estado = pagina.css('.clsCabecalhoCol00')[2]['value']
-    partido = pagina.css('.clsCabecalhoCol00')[3]['value']
+      pagina = Nokogiri::HTML(html)
 
-    if pagina.css('.linhaPreenchida').size > 0  #quer dizer que o candidato recebeu alguma doação
-      cnpj = pagina.css('.linhaPreenchida').children[21].children.text.strip.gsub(/[\.\(\/-]/, '')
+      numero = pagina.css('.clsCabecalhoCol00')[0]['value']
+      nome_civil = pagina.css('.clsCabecalhoCol00')[1]['value']
+      nome_civil_sem_acentos = I18n.transliterate(nome_civil)
+      estado = pagina.css('.clsCabecalhoCol00')[2]['value']
+      partido = pagina.css('.clsCabecalhoCol00')[3]['value']
+
+      if pagina.css('.linhaPreenchida').size > 0  #quer dizer que o candidato recebeu alguma doação
+        cnpj = pagina.css('.linhaPreenchida').children[21].children.text.strip.gsub(/[\.\(\/-]/, '')
+      end
+
+
+
+      c = Candidato.find_or_create_by(:nome_civil_sem_acentos=>nome_civil_sem_acentos)
+      if c.update(:numero=>numero,
+              :nome_civil=>nome_civil,
+              :estado=>estado,
+              :partido=>partido,
+              :cnpj=>cnpj,
+              :html=>html,
+              :sequencial=> seqCandidato
+        )
+          puts " #{c.nome_civil} - #{c.numero} - #{c.sequencial} atualizado com sucesso"
+      end
     end
 
-
-
-    c = Candidato.find_or_create_by(:nome_civil_sem_acentos=>nome_civil_sem_acentos)
-    if c.update(:numero=>numero,
-            :nome_civil=>nome_civil,
-            :estado=>estado,
-            :partido=>partido,
-            :cnpj=>cnpj,
-            :html=>html,
-            :sequencial=> seqCandidato
-      )
-        puts " #{c.nome_civil} - #{c.numero} - #{c.sequencial} atualizado com sucesso"
-    end
 
 
   end
 
 
+  def self.processa_doacoes
+
+    Candidato.where(:html.ne=>nil).each do |c|
+      pagina = Nokogiri::HTML(c.html)
+      classes_td = ['.linhaPreenchida', '.linhaNaoPreenchida']
+
+      classes_td.each do |classe|
+
+        pagina.css(classe).each do |tr|
+
+          td = tr.children
+
+          nome_doador = td[1].text.squish
+          cnpj_cpf_doador = td[3].text.squish.gsub(/[\.\(\/-]/, '')
+
+          doador = Doador.find_or_create_by(:cnpj_cpf=>cnpj_cpf_doador)
+          if doador.update(:nome=>nome_doador)
+            #puts "DOADOR #{doador.nome} salvo ---  cpf/cnpj #{doador.cnpj_cpf}"
+          end
+
+
+          nome_originario = td[5].text.squish.blank? ? nil : td[5].text.squish
+          cpf_cnpj_originario = td[7].text.squish.blank? ? nil : td[7].text.squish.gsub(/[\.\(\/-]/, '')
+
+          if not cpf_cnpj_originario.nil?
+
+            doador_originario = Doador.find_or_create_by(:cnpj_cpf=>cpf_cnpj_originario)
+            if doador_originario.update(:nome=>nome_originario)
+              #puts "DOADOR ORIGINÁRIO   #{doador_originario.nome}  cpf/cnpj  #{doador_originario.cnpj_cpf}"
+            end
+
+          end
+
+
+          nro_recibo = td[11].text.squish
+          data_doacao = Date.strptime(td[9].text.squish, '%m/%d/%y')
+          #os valores vem com apenas 1 zero depois da virgula. a expressao abaixo adiciona mais 1 zero.
+          valor_string = td[13].text.squish
+          valor_ajustado = valor_string.split(/\./)[1].size == 2 ? valor_string : valor_string + "0"
+          valor_em_cents = valor_ajustado.gsub(/[\,\(\/.]/, '').to_i
+
+
+          especie_recurso = td[15].text.squish
+          nro_documento = td[17].text.squish
+          fonte_recurso = td[31].text.squish
+
+          doacao = Doacao.find_or_create_by(:nro_recibo=>nro_recibo)
+
+
+          if doacao.update(:data=>data_doacao,
+                           :valor=>valor_em_cents,
+                           :especie_recurso=>especie_recurso,
+                           :nro_documento=>nro_documento,
+                           :fonte_recurso=>fonte_recurso,
+                           :candidato=>c,
+                           :doador=>doador,
+                           :doador_originario=>doador_originario)
+
+              puts "doacao nro #{doacao.nro_recibo} com valor #{doacao.valor} do dia #{doacao.data} para o candidato #{c.sequencial} criada"
+          end
+
+
+        end
+
+      end
+
+
+    end
+
+  end
 
 
 end
