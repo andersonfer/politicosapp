@@ -17,4 +17,12 @@ class Doacao
 
 
 
+  def self.processa_doacoes
+
+    Candidato.where(:html.ne=>nil).each do |c|
+      c.processa_html_do_candidato
+    end
+
+  end
+
 end

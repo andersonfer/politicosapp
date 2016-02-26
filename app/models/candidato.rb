@@ -170,72 +170,68 @@ class Candidato
   end
 
 
-  def self.processa_doacoes
+  def processa_html_do_candidato
 
-    Candidato.where(:html.ne=>nil).each do |c|
-      pagina = Nokogiri::HTML(c.html)
-      classes_td = ['.linhaPreenchida', '.linhaNaoPreenchida']
+    pagina = Nokogiri::HTML(self.html)
+    classes_td = ['.linhaPreenchida', '.linhaNaoPreenchida']
 
-      classes_td.each do |classe|
+    classes_td.each do |classe|
 
-        pagina.css(classe).each do |tr|
+      pagina.css(classe).each do |tr|
 
-          td = tr.children
+        td = tr.children
 
-          nome_doador = td[1].text.squish
-          cnpj_cpf_doador = td[3].text.squish.gsub(/[\.\(\/-]/, '')
+        nome_doador = td[1].text.squish
+        cnpj_cpf_doador = td[3].text.squish.gsub(/[\.\(\/-]/, '')
 
-          doador = Doador.find_or_create_by(:cnpj_cpf=>cnpj_cpf_doador)
-          if doador.update(:nome=>nome_doador)
-            #puts "DOADOR #{doador.nome} salvo ---  cpf/cnpj #{doador.cnpj_cpf}"
+        doador = Doador.find_or_create_by(:cnpj_cpf=>cnpj_cpf_doador)
+        if doador.update(:nome=>nome_doador)
+          #puts "DOADOR #{doador.nome} salvo ---  cpf/cnpj #{doador.cnpj_cpf}"
+        end
+
+
+        nome_originario = td[5].text.squish.blank? ? nil : td[5].text.squish
+        cpf_cnpj_originario = td[7].text.squish.blank? ? nil : td[7].text.squish.gsub(/[\.\(\/-]/, '')
+
+        if not cpf_cnpj_originario.nil?
+
+          doador_originario = Doador.find_or_create_by(:cnpj_cpf=>cpf_cnpj_originario)
+          if doador_originario.update(:nome=>nome_originario)
+            #puts "DOADOR ORIGINÁRIO   #{doador_originario.nome}  cpf/cnpj  #{doador_originario.cnpj_cpf}"
           end
-
-
-          nome_originario = td[5].text.squish.blank? ? nil : td[5].text.squish
-          cpf_cnpj_originario = td[7].text.squish.blank? ? nil : td[7].text.squish.gsub(/[\.\(\/-]/, '')
-
-          if not cpf_cnpj_originario.nil?
-
-            doador_originario = Doador.find_or_create_by(:cnpj_cpf=>cpf_cnpj_originario)
-            if doador_originario.update(:nome=>nome_originario)
-              #puts "DOADOR ORIGINÁRIO   #{doador_originario.nome}  cpf/cnpj  #{doador_originario.cnpj_cpf}"
-            end
-
-          end
-
-
-          nro_recibo = td[11].text.squish
-          data_doacao = Date.strptime(td[9].text.squish, '%m/%d/%y')
-          #os valores vem com apenas 1 zero depois da virgula. a expressao abaixo adiciona mais 1 zero.
-          valor_string = td[13].text.squish
-          valor_ajustado = valor_string.split(/\./)[1].size == 2 ? valor_string : valor_string + "0"
-          valor_em_cents = valor_ajustado.gsub(/[\,\(\/.]/, '').to_i
-
-
-          especie_recurso = td[15].text.squish
-          nro_documento = td[17].text.squish
-          fonte_recurso = td[31].text.squish
-
-          doacao = Doacao.find_or_create_by(:nro_recibo=>nro_recibo)
-
-
-          if doacao.update(:data=>data_doacao,
-                           :valor=>valor_em_cents,
-                           :especie_recurso=>especie_recurso,
-                           :nro_documento=>nro_documento,
-                           :fonte_recurso=>fonte_recurso,
-                           :candidato=>c,
-                           :doador=>doador,
-                           :doador_originario=>doador_originario)
-
-              puts "doacao nro #{doacao.nro_recibo} com valor #{doacao.valor} do dia #{doacao.data} para o candidato #{c.sequencial} criada"
-          end
-
 
         end
 
-      end
 
+        nro_recibo = td[11].text.squish
+        data_doacao = Date.strptime(td[9].text.squish, '%m/%d/%y')
+        #os valores vem com apenas 1 zero depois da virgula. a expressao abaixo adiciona mais 1 zero.
+        valor_string = td[13].text.squish
+        valor_ajustado = valor_string.split(/\./)[1].size == 2 ? valor_string : valor_string + "0"
+        valor_em_cents = valor_ajustado.gsub(/[\,\(\/.]/, '').to_i
+
+
+        especie_recurso = td[15].text.squish
+        nro_documento = td[17].text.squish
+        fonte_recurso = td[31].text.squish
+
+        doacao = Doacao.find_or_create_by(:nro_recibo=>nro_recibo)
+
+
+        if doacao.update(:data=>data_doacao,
+                         :valor=>valor_em_cents,
+                         :especie_recurso=>especie_recurso,
+                         :nro_documento=>nro_documento,
+                         :fonte_recurso=>fonte_recurso,
+                         :candidato=>c,
+                         :doador=>doador,
+                         :doador_originario=>doador_originario)
+
+            puts "doacao nro #{doacao.nro_recibo} com valor #{doacao.valor} do dia #{doacao.data} para o candidato #{self.sequencial} criada"
+        end
+
+
+      end
 
     end
 
