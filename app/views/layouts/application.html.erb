@@ -36,11 +36,11 @@
         
         <ul class="nav navbar-nav">
           
-          <li class="<%= 'active' if request.path.gsub(/\?.*/, '')==root_path %>">
+          <li class="<%= 'active' if request.path.gsub(/\?.*/, '') == root_path %>">
             <%= link_to 'home', root_path %>
           </li>
 
-          <li class="<%= 'active' if request.path.gsub(/\?.*/, '')==usuarios_path %>">
+          <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(usuarios_path) %>">
             <%= link_to 'usuários', usuarios_path %>
           </li>
 
@@ -60,11 +60,24 @@
       <%= yield :titulo_tela %>
     </h1>
 
-    <p class="lead">
+    
+    <% if opcoes_menu_interno = menu_interno %>
+
+      <% opcoes_menu_interno.each do |nome_link, dados_link| %>
+
+        <%= link_to nome_link, dados_link['path'], :class=>"btn btn-sm #{'btn-success' if dados_link['ativo']}" %>
+
+      <% end %>
+
+    <% end %>
+
+
+    <p class="lead" style="margin-top:10px; margin-bottom:0px;">
       <%= yield :lead %>
     </p>
 
-    <div style="margin-top:20px; padding-top:20px; border-top:dotted 1px #DDD;">
+
+    <div style="margin-top:5px; padding-top:20px; border-top:dotted 1px #DDD;">
       <%= yield %>
     </div>
 
