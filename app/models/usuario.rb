@@ -1,5 +1,6 @@
-class Mj::ProgramaUfHabilitada
+class Usuario
 
   include Mongoid::Document
+
 
 end

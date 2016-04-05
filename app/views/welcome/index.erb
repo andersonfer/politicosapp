@@ -1,5 +1,10 @@
-oi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=)
-<br/><br/><br/>
+<% content_for :titulo_tela do %>
+	Bem-vindo ao Política BR
+<% end %>
+
+<% content_for :lead do %>
+	Os números da política brasileira destrinchados
+<% end %>
 
 Em 2014, houve <%= Doacao.all.size %> doações <br/><br/><br/> para candidatos a deputados federais
 Que totalizaram R$ <%=  Doacao.sum(:valor)/100 %> em doações<br/><br/><br/>
