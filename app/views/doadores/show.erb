@@ -1,0 +1,7 @@
+<% content_for :titulo_tela do %>
+  <%= @doador.nome %> - <%= @doador.cnpj_cpf %>
+<% end %>
+
+<% content_for :lead do %>
+  <%= @doacoes.count %> doações - <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+<% end %>

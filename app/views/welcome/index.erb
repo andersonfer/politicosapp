@@ -6,8 +6,8 @@
 	Os números da política brasileira destrinchados
 <% end %>
 
-Em 2014, houve <%= Doacao.all.size %> doações <br/><br/><br/> para candidatos a deputados federais
-Que totalizaram R$ <%=  Doacao.sum(:valor)/100 %> em doações<br/><br/><br/>
+Em 2014, houve <b> <%= Doacao.all.size %> doações </b> para candidatos a deputados federais <br/><br/><br/>
+Que totalizaram <b> R$ <%=  Doacao.sum(:valor)/100 %> </b> em doações<br/><br/><br/>
 
 muita grana, não? <br/><br/><br/><br/>
 

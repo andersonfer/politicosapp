@@ -18,22 +18,9 @@
 
 
 ActiveSupport::Inflector.inflections do |inflect|
-  inflect.plural 'ConvenioProgramas', 'ConveniosProgramas'
-  inflect.plural 'Empenho', 'Empenhos'
-  inflect.plural 'ExecucaoFinanceira', 'ExecucoesFinanceira'
-  inflect.plural 'PropostaPrograma', 'PropostasPrograma'
-  inflect.plural 'PropostaDadosBancarios', 'PropostasDadosBancarios'
-  inflect.plural 'PropostaDadosResponsaveis', 'PropostasDadosResponsaveis'
-  inflect.plural 'PropostaDadosProponente', 'PropostasDadosProponente'
-  inflect.plural 'PropostaEmendaParlamentar', 'PropostasEmendaParlamentar'
-  inflect.plural 'PropostaBenefEspecifico', 'PropostasBenefEspecifico'
-  inflect.plural 'Programa', 'Programas'
-  inflect.plural 'ProgramaUfHabilitada', 'ProgramaUfHabilitadas'
-  inflect.plural 'DocumentoLiquidacao', 'DocumentosLiquidacao'
-  inflect.plural 'PagamentoObtv', 'PagamentosObtv'
-  inflect.plural 'DiscriminacaoObtv', 'DiscriminacoesObtv'
-  inflect.plural 'CronogramaFisicoPt', 'CronogramasFisicoPt'
-  inflect.plural 'CronogramaDesembolsoPt', 'CronogramasDesembolsoPt'
-  inflect.plural 'PlanoAplicacaoPt', 'PlanosAplicacaoPt'
+
+  # inflect.plural 'doador', 'doadores'
+  inflect.singular 'doadores', 'doador'
+
 
 end

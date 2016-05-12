@@ -5,6 +5,13 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+
+  resources :candidatos, :only=>['index', 'show'] do
+  end
+
+  resources :doadores, :only=>['index', 'show'] do
+  end
+
   resources :usuarios, :only=>['index', 'new'] do
   end
 

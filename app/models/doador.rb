@@ -5,6 +5,8 @@ class Doador
   field :nome, type:String, default:nil
   field :cnpj_cpf, type:String, default:nil
 
+  has_many :doacoes, class_name:'Doacao'
+
 
   validates_uniqueness_of :cnpj_cpf
 

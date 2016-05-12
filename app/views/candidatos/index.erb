@@ -1,0 +1,61 @@
+<% content_for :titulo_tela do %>
+  Candidatos
+<% end %>
+
+<% content_for :lead do %>
+  <%= @candidatos.count %> candidatos encontrados <br>
+<% end %>
+
+
+<table class="table table-bordered table-hover" style="font-size:0.9em;">
+
+  <tr>
+    <th>
+      Nome
+    </th>
+
+    <th>
+      Estado
+    </th>
+
+    <th>
+      Partido
+    </th>
+
+    <th>Total em doações</th>
+
+
+
+  </tr>
+
+
+<% @candidatos.each do |candidato| %>
+
+  <tr>
+
+    <td>
+      <%= candidato.nome %>
+    </td>
+
+    <td>
+      <%= candidato.estado %>
+    </td>
+
+    <td>
+      <%= candidato.partido %>
+    </td>
+
+    <td>
+      <%= link_to 'lista de doações', candidato_path(candidato) %>
+
+    </td>
+
+  </tr>
+
+
+
+<%end%>
+
+
+</table>
+

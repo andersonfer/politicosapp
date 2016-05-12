@@ -58,7 +58,7 @@ class Doacao
 
       end
       if doacao.save!
-        puts "#{candidato.nome} - #{doacao.nro_recibo} - #{doacao.valor}  - #{doacao.valor}"
+        puts "#{candidato.nome} - #{doacao.nro_recibo} - #{doacao.valor}  - #{doacao.data}"
       end
     end
 

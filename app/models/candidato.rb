@@ -13,6 +13,8 @@ class Candidato
   field :cnpj,        :type=>String, :default=>nil
   field :candidato_a, :type=>String, :default=>nil
 
+  has_many :doacoes, class_name:'Doacao'
+
   validates_uniqueness_of :sequencial
 
   def self.carrega_dados_dos_cantidatos_a_deputado_federal
