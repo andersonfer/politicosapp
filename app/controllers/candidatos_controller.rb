@@ -8,7 +8,7 @@ class CandidatosController < ApplicationController
 
   def show
     @candidato = Candidato.find params['id']
-    @doacoes = @candidato.doacoes.order(data: :asc)
+    @doacoes = @candidato.doacoes.order(valor: :desc)
 
     @doadores = {}
     Doador.all.each do |d|

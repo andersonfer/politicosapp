@@ -37,11 +37,26 @@
       </td>
 
       <td>
-        <%= @doadores[doacao.doador_id.to_s].nome %>
+
+
+        <% if not doacao.doador_originario_id.blank? %>
+
+            <%= link_to @doadores[doacao.doador_originario_id.to_s].nome, doador_path(doacao.doador_originario_id) %>
+            (via <%= link_to @doadores[doacao.doador_id.to_s].nome, doador_path(doacao.doador_id) %>)
+
+        <%else%>
+          <%= link_to @doadores[doacao.doador_id.to_s].nome, doador_path(doacao.doador_id) %>
+        <%end%>
+
+
       </td>
 
       <td>
-        <%= @doadores[doacao.doador_id.to_s].cnpj_cpf %>
+         <% if not doacao.doador_originario_id.blank? %>
+            <%= @doadores[doacao.doador_originario_id.to_s].cnpj_cpf %>
+        <%else%>
+          <%= @doadores[doacao.doador_id.to_s].cnpj_cpf %>
+        <%end%>
       </td>
 
       <td style="text-align:right">
