@@ -18,6 +18,14 @@
       Candidato
     </th>
 
+    <th style="text-align:center">
+      Partido
+    </th>
+
+    <th style="text-align:center">
+      Estado
+    </th>
+
 
     <th style="text-align:center">
       CPF/CNPJ
@@ -41,6 +49,14 @@
       </td>
 
       <td>
+        <%= @candidatos[doacao.candidato_id.to_s].partido %>
+      </td>
+
+      <td>
+        <%= @candidatos[doacao.candidato_id.to_s].estado %>
+      </td>
+
+      <td>
         <%= @candidatos[doacao.candidato_id.to_s].cnpj %>
       </td>
 
@@ -55,7 +71,7 @@
   <%end%>
 
   <tr>
-    <td colspan="4" style="text-align:center;font-size:1.1em;font-weight:bold">
+    <td colspan="6" style="text-align:center;font-size:1.1em;font-weight:bold">
       Total em Doações: <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
 
 
