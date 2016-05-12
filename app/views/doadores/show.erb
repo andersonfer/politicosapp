@@ -5,3 +5,65 @@
 <% content_for :lead do %>
   <%= @doacoes.count %> doações - <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
 <% end %>
+
+
+<table class="table table-bordered table-hover" style="font-size:0.9em;text-align:center">
+
+  <tr >
+    <th style="text-align:center">
+      Data da doação
+    </th>
+
+    <th style="text-align:center">
+      Candidato
+    </th>
+
+
+    <th style="text-align:center">
+      CPF/CNPJ
+    </th>
+
+    <th style="text-align:center">
+      Valor
+    </th>
+
+  </tr>
+
+  <% @doacoes.each do |doacao| %>
+
+    <tr>
+      <td width="10%">
+        <%= doacao.data.strftime("%d/%m/%y") %>
+      </td>
+
+      <td>
+        <%= @candidatos[doacao.candidato_id.to_s].nome %>
+      </td>
+
+      <td>
+        <%= @candidatos[doacao.candidato_id.to_s].cnpj %>
+      </td>
+
+      <td style="text-align:right">
+
+        <%=number_to_currency(("%.2f" % (doacao.valor.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+      </td>
+    </tr>
+
+
+
+  <%end%>
+
+  <tr>
+    <td colspan="4" style="text-align:center;font-size:1.1em;font-weight:bold">
+      Total em Doações: <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+
+
+
+    </td>
+
+
+  </tr>
+
+
+</table>
