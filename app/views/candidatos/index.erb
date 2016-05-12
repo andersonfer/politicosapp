@@ -29,24 +29,25 @@
   </tr>
 
 
-<% @candidatos.each do |candidato| %>
+<% @totais.sort_by{|id,valor|valor}.reverse.each do |candidato_id,valor| %>
 
   <tr>
 
     <td>
-      <%= candidato.nome %>
+      <%= @candidatos[candidato_id].nome %>
     </td>
 
     <td>
-      <%= candidato.estado %>
+      <%= @candidatos[candidato_id].estado %>
     </td>
 
     <td>
-      <%= candidato.partido %>
+      <%= @candidatos[candidato_id].partido %>
     </td>
 
     <td>
-      <%= link_to 'lista de doações', candidato_path(candidato) %>
+      <% total = number_to_currency(("%.2f" % (valor.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+      <%= link_to total, candidato_path(candidato_id) %>
 
     </td>
 
