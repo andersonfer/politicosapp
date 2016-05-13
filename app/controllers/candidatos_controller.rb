@@ -7,7 +7,7 @@ class CandidatosController < ApplicationController
       @candidatos[c.id.to_s] = c
     end
 
-    @totais = {}
+    @soma = {}
 
 
     @doacoes = {}
@@ -37,9 +37,11 @@ class CandidatosController < ApplicationController
 
       end
 
-      @totais[candidato_id] = soma
+      @soma[candidato_id] = soma
 
     end
+
+    @totais = @soma.sort_by{|id,valor|valor}.reverse.each
 
   end
 
