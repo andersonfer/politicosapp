@@ -8,12 +8,18 @@ class Candidato
   field :sequencial,        :type=>String, :default=>nil
   field :nome,        :type=>String, :default=>nil
   field :estado,        :type=>String, :default=>nil
-  field :partido,        :type=>String, :default=>nil
+  #field :partido,        :type=>String, :default=>nil
+  field :nome_partido,        :type=>String, :default=>nil
   field :numero,        :type=>String, :default=>nil
   field :cnpj,        :type=>String, :default=>nil
   field :candidato_a, :type=>String, :default=>nil
 
+
+  belongs_to :partido
   has_many :doacoes, class_name:'Doacao'
+
+  scope :dos_partidos, ->(partidos_ids) {self.and(:partido_id.in=>partidos_ids) }
+
 
   validates_uniqueness_of :sequencial
 

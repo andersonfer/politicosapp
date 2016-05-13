@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   resources :usuarios, :only=>['index', 'new'] do
   end
 
+  resources :partidos, :only=>['index', 'new'] do
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

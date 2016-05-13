@@ -45,6 +45,10 @@
             <%= link_to 'doadores', doadores_path %>
           </li>
 
+          <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(partidos_path) %>">
+            <%= link_to 'partidos', partidos_path %>
+          </li>
+
          <!--  <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(usuarios_path) %>">
             <%= link_to 'usuários', usuarios_path %>
           </li> -->

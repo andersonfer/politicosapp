@@ -2,8 +2,9 @@ class CandidatosController < ApplicationController
 
   def index
 
+    @consulta_candidatos = Candidato.page(params['page'])
     @candidatos = {}
-    Candidato.all.each do |c|
+    @consulta_candidatos.each do |c|
       @candidatos[c.id.to_s] = c
     end
 
@@ -13,7 +14,7 @@ class CandidatosController < ApplicationController
     @doacoes = {}
 
 
-    Doacao.all.each do |d|
+    Doacao.dos_candidatos(@candidatos.keys).each do |d|
 
       if @doacoes[d.candidato_id.to_s]
         @doacoes[d.candidato_id.to_s].push d

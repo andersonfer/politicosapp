@@ -17,6 +17,9 @@ class Doacao
 
   validates_presence_of :candidato,:doador,:valor
 
+  scope :dos_candidatos, ->(candidato_ids) {self.and(:candidato_id.in=>candidato_ids) }
+
+
 
   def self.carrega_doacoes_dos_cantidatos_a_deputado_federal
 

@@ -3,13 +3,15 @@
 <% end %>
 
 <% content_for :lead do %>
-  <%= @candidatos.count %> candidatos encontrados <br>
+  <%= @consulta_candidatos.count %> candidatos encontrados <br>
 <% end %>
 
+<%= paginate @consulta_candidatos %>
 
 <table class="table table-bordered table-hover" style="font-size:0.9em;">
 
   <tr>
+    <th> # </th>
     <th>
       Nome
     </th>
@@ -28,10 +30,20 @@
 
   </tr>
 
+<% index = 0 %>
+<%
+  offset = params['page'].to_i
+  offset = 1 if offset == 0
+  offset = (offset - 1) * 25
+  index = offset
+ %>
 
 <% @totais.sort_by{|id,valor|valor}.reverse.each do |candidato_id,valor| %>
 
+
   <tr>
+
+    <td> <%=index = index + 1 %> </td>
 
     <td>
       <%= @candidatos[candidato_id].nome %>

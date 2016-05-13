@@ -1,0 +1,58 @@
+<% content_for :titulo_tela do %>
+  Partidos
+<% end %>
+
+<% content_for :lead do %>
+  <%= @consulta_partidos.count %> partidos encontrados <br>
+<% end %>
+
+
+<%= paginate @consulta_partidos %>
+
+<table class="table table-bordered table-hover" style="font-size:0.9em;">
+
+  <tr>
+    <th> # </th>
+    <th>
+      Nome
+    </th>
+
+
+    <th>Total em doações</th>
+
+
+
+  </tr>
+
+<% index = 0 %>
+<%
+  offset = params['page'].to_i
+  offset = 1 if offset == 0
+  offset = (offset - 1) * 25
+  index = offset
+ %>
+
+<% @consulta_partidos.each do |partido| %>
+
+
+  <tr>
+
+    <td> <%=index = index + 1 %> </td>
+
+    <td>
+      <%= partido.nome %>
+    </td>
+
+    <td>
+      <%= number_to_currency(("%.2f" % (@doacoes[partido.id.to_s].to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+
+    </td>
+
+  </tr>
+
+
+
+<%end%>
+
+
+</table>
