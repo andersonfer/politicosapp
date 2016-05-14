@@ -15,58 +15,69 @@
 
 <body>
 
+    
+  
+
   <nav class="navbar navbar-default" style="border-radius: 0px; border-top: none; border-right: none; border-left: none;">
 
     <div class="container">
 
-      <div class="navbar-header">
+      <div class="row">
 
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+        <div class="navbar-header">
 
-        <%= link_to 'Politica BR', '/', :class=>"navbar-brand" %>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
 
-      </div>
+          <%= link_to 'Politica BR', '/', :class=>"navbar-brand" %>
 
-      <div class="collapse navbar-collapse">
+        </div>
 
-        <ul class="nav navbar-nav">
+        <div class="collapse navbar-collapse">
 
-
-          <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(candidatos_path) %>">
-            <%= link_to 'candidatos', candidatos_path %>
-          </li>
-
-          <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(doadores_path) %>">
-            <%= link_to 'doadores', doadores_path %>
-          </li>
-
-          <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(partidos_path) %>">
-            <%= link_to 'partidos', partidos_path %>
-          </li>
-
-         <!--  <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(usuarios_path) %>">
-            <%= link_to 'usuários', usuarios_path %>
-          </li> -->
+          <ul class="nav navbar-nav">
 
 
-        </ul>
+            <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(candidatos_path) %>">
+              <%= link_to 'candidatos', candidatos_path %>
+            </li>
+
+            <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(doadores_path) %>">
+              <%= link_to 'doadores', doadores_path %>
+            </li>
+
+            <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(partidos_path) %>">
+              <%= link_to 'partidos', partidos_path %>
+            </li>
+
+            <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(conteudo_lrf_path) %>">
+              <%= link_to 'LRF', conteudo_lrf_path %>
+            </li>
+
+           <!--  <li class="<%= 'active' if request.path.gsub(/\?.*/, '').include?(usuarios_path) %>">
+              <%= link_to 'usuários', usuarios_path %>
+            </li> -->
 
 
-<!--         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Link</a></li>
-        </ul> -->
+          </ul>
+
+
+  <!--         <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Link</a></li>
+          </ul> -->
+        </div>
+
       </div>
     </div>
   </nav>
 
 
   <div class="container">
-    <h1>
+    <h1 class="row">
       <%= yield :titulo_tela %>
     </h1>
 
@@ -82,12 +93,12 @@
     <% end %>
 
 
-    <p class="lead" style="margin-top:10px; margin-bottom:0px;">
+    <p class="lead row" style="margin-top:10px; margin-bottom:0px;">
       <%= yield :lead %>
     </p>
 
 
-    <div style="margin-top:5px; padding-top:20px; border-top:dotted 1px #DDD;">
+    <div class="row" style="margin-top:5px; padding-top:20px; border-top:dotted 1px #DDD;">
       <%= yield %>
     </div>
 

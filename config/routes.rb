@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   resources :partidos, :only=>['index', 'new'] do
   end
 
+  namespace :conteudo do 
+    get :lrf
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

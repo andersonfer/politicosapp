@@ -21,6 +21,7 @@ ActiveSupport::Inflector.inflections do |inflect|
 
   # inflect.plural 'doador', 'doadores'
   inflect.singular 'doadores', 'doador'
+  inflect.singular 'leis_orcamentarias_anuais', 'lei_orcamentaria_anual'
 
 
 end

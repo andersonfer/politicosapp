@@ -1,0 +1,24 @@
+<% content_for :titulo_tela do %>
+  LRF
+<% end %>
+
+<% content_for :lead do %>
+  Lei de  Responsabilidade Fiscal
+<% end %>
+
+<style type="text/css">
+
+  .list-group-item {
+    border-color: white;
+  }
+
+</style>
+
+<% index_titulo = 0 %>
+<%= render :partial=>'objetivos', :locals=>{:index=>index_titulo+=1} %>
+<%= render :partial=>'observacoes_e_criticas', :locals=>{:index=>index_titulo+=1} %>
+<%= render :partial=>'definicoes', :locals=>{:index=>index_titulo+=1} %>
+
+    . 
+
+
