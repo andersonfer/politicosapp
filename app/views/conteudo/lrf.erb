@@ -12,31 +12,125 @@
     border-color: white;
   }
 
+  .quadrado{
+    text-align: center;
+    padding: 5px 10px;
+    border: solid 1px #CCC;
+    background-color: #EEE;
+    display: inline-block;
+    font-size: 0.8em;
+    height: 100%;
+    margin-bottom: 10px;
+  }
+
 </style>
 
-<% index_titulo = 0 %>
-<%= render :partial=>'objetivos', :locals=>{:index=>index_titulo+=1} %>
+<% 
+  index_titulo_nivel_1 = 0 
+  index_titulo_nivel_2 = 0 
+%>
+<%= render :partial=>'objetivos', :locals=>{:index=>index_titulo_nivel_1+=1} %>
 
 
 
 
 <h3 class="col-lg-12" style="margin-top:30px;">
-  <%= index_titulo += 1 %>. Tópicos da LRF
+  <%= index_titulo_nivel_1 += 1 %>. Sobre a LRF
 </h3>
 
 <div class="col-lg-12">
 
   <div class="list-group">
 
-
     <div class="list-group-item">
-      <h5 class="list-group-item-heading">
-        60%
-      </h5>
+      
+      <div class="panel panel-warning">
 
-      <p class="list-group-item-text">
-        
-      </p>
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= index_titulo_nivel_1 %>.<%= index_titulo_nivel_2 += 1 %>. 
+            Ajuste no conceito da RCL
+          </h3>
+        </div>
+
+        <div class="panel-body">
+
+          <p>
+            A história da 
+            <a href="#rcl">Receita Corrente Líquida (RCL)</a>:
+          </p>
+
+          <p>
+            <div class="col-lg-12">
+              <div class="quadrado">
+                
+                <div style="font-weight:bold;">
+                  1995
+                </div>
+
+                <div style="border-top: solid 1px white; margin-top:3px; padding-top:3px;">
+                  <a href="#emenda_constitucional">Emenda Constitucional</a> 82/95, 
+                  <br>
+                  chamada de Lei Camata I
+                </div>
+
+                <div style="border-top: solid 1px white; margin-top:3px; padding-top:3px; font-size:1.3em; font-weight:bold;">
+                   Definição da <a href="#rcl">RCL</a>
+                </div>
+              </div>
+
+
+              <div class="quadrado">
+                
+                <div style="font-weight:bold;">
+                  1999
+                </div>
+
+                <div style="border-top: solid 1px white; margin-top:3px; padding-top:3px;">
+                  <a href="#emenda_constitucional">Emenda Constitucional</a> 96/99, 
+                  <br>
+                  chamada de Lei Camata II
+                </div>
+
+                <div style="border-top: solid 1px white; margin-top:3px; padding-top:3px; font-size:1.3em; font-weight:bold;">
+                   Alteração da <a href="#rcl">RCL</a>
+                </div>
+              </div>
+
+
+              <div class="quadrado">
+                
+                <div style="font-weight:bold;">
+                  2000
+                </div>
+
+                <div style="border-top: solid 1px white; margin-top:3px; padding-top:3px;">
+                  <a href="#lei_complementar">Lei Complementar</a> 101/00, 
+                  <br>
+                  chamada de LRF
+                </div>
+
+                <div style="border-top: solid 1px white; margin-top:3px; padding-top:3px; font-size:1.3em; font-weight:bold;">
+                   <a href="#rcl">RCL</a> 
+                   como parâmetro central
+                </div>
+              </div>
+
+            </div>
+
+          </p>
+
+
+          <p>
+            A LRF deixou o conceito da 
+            <a href="#rcl">RCL</a>
+            mais preciso, no que diz
+            respeito ao atendimento dos limites legais:
+          </p>
+
+        </div>
+
+      </div>
 
     </div>
 
@@ -48,8 +142,8 @@
 
 
 
-<%= render :partial=>'observacoes_e_criticas', :locals=>{:index=>index_titulo+=1} %>
-<%= render :partial=>'definicoes', :locals=>{:index=>index_titulo+=1} %>
+<%= render :partial=>'observacoes_e_criticas', :locals=>{:index=>index_titulo_nivel_1+=1} %>
+<%= render :partial=>'definicoes', :locals=>{:index=>index_titulo_nivel_1+=1} %>
 
     . 
 
