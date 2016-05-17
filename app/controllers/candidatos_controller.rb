@@ -2,7 +2,14 @@ class CandidatosController < ApplicationController
 
   def index
 
-    @consulta_candidatos = Candidato.page(params['page'])
+    @partidos = {}
+
+    Partido.all.each do |p|
+
+      @partidos[p.id.to_s] = p.nome
+    end
+
+    @consulta_candidatos = Candidato.page(params['page']).per(7077)
     @candidatos = {}
     @consulta_candidatos.each do |c|
       @candidatos[c.id.to_s] = c
