@@ -1,5 +1,5 @@
 <% content_for :titulo_tela do %>
-  <%= @candidato.nome %> - <%= @candidato.partido %> - <%= @candidato.estado %>
+  <%= @candidato.nome %> - <%= @candidato.partido.nome %> - <%= @candidato.estado %>
 <% end %>
 
 <% content_for :lead do %>
@@ -41,8 +41,8 @@
 
         <% if not doacao.doador_originario_id.blank? %>
 
-            <%= link_to @doadores[doacao.doador_originario_id.to_s].nome, doador_path(doacao.doador_originario_id) %>
-            (via <%= link_to @doadores[doacao.doador_id.to_s].nome, doador_path(doacao.doador_id) %>)
+            <%= link_to @doadores[doacao.doador_id.to_s].nome, doador_path(doacao.doador_id) %>
+            (via <%= link_to @doadores[doacao.doador_originario_id.to_s].nome, doador_path(doacao.doador_originario_id) %>)
 
         <%else%>
           <%= link_to @doadores[doacao.doador_id.to_s].nome, doador_path(doacao.doador_id) %>
