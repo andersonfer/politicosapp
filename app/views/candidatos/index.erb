@@ -58,7 +58,7 @@
     </td>
 
     <td>
-      <% total = number_to_currency(("%.2f" % (valor.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+      <% total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
       <%= link_to total, candidato_path(candidato_id) %>
 
     </td>

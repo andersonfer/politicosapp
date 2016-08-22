@@ -13,6 +13,22 @@ class Candidato
   field :numero,        :type=>String, :default=>nil
   field :cnpj,        :type=>String, :default=>nil
   field :candidato_a, :type=>String, :default=>nil
+  field :_total_em_doacoes, :type=>Float, :default=>nil
+
+  field :nome_parlamentar,        :type=>String, :default=>nil
+  field :titularidade,        :type=>String, :default=>nil
+  field :endereco,        :type=>String, :default=>nil
+  field :telefone  ,        :type=>String, :default=>nil
+  field :fax ,        :type=>String, :default=>nil
+  field :mes_dia_aniversario,        :type=>String, :default=>nil
+  field :email,        :type=>String, :default=>nil
+  field :tratamento,        :type=>String, :default=>nil
+  field :profissões,        :type=>String, :default=>nil
+  field :nome_civil,        :type=>String, :default=>nil
+
+  field :nome_pra_pesquisa,        :type=>String, :default=>nil
+
+  before_save :calcula_nome_pra_pesquisa
 
 
   belongs_to :partido
@@ -22,6 +38,76 @@ class Candidato
 
 
   validates_uniqueness_of :sequencial
+
+  def calcula_nome_pra_pesquisa
+
+    self.nome_pra_pesquisa = self.nome.to_minusculas_sem_acentos_e_cia
+  end
+
+  def self.le_arquivo_deputados_federais
+    CSV.foreach('deputados.csv', {:col_sep=>";"}) do |linha|
+      attrs_candidato = Candidato.attrs_candidato_from_linha_importacao(linha)
+
+      if attrs_candidato['nome_civil'] == "ÁTILA SIDNEY LINS ALBUQUERQUE"
+        attrs_candidato['nome_civil'] = "ATILA SIDNEY LINS DE ALBUQUERQUE"
+      # elsif attrs_candidato['nome_civil'] == ''
+      #   attrs_candidato['nome_civil'] = ''
+      elsif attrs_candidato['nome_civil'] == 'BRUNIELE FERREIRA GOMES'
+        attrs_candidato['nome_civil'] = 'BRUNIELE FERREIRA DA SILVA'
+      elsif attrs_candidato['nome_civil'] == 'ELIZEU DIONIZIO SOUZA DA SILVA'
+        attrs_candidato['nome_civil'] = 'ELIZEU DIONIZIO SOUZA  DA SILVA'
+      elsif attrs_candidato['nome_civil'] == 'GIVALDO DE SÁ GOUVEIA'
+        attrs_candidato['nome_civil'] = 'GIVALDO DE SÁ GOUVEIA CARIMBÃO'
+      elsif attrs_candidato['nome_civil'] == 'ANTONIO PEDRO DE SIQUEIRA INDIO DA COSTA'
+        attrs_candidato['nome_civil'] = 'ANTONIO PEDRO INDIO DA COSTA'
+      elsif attrs_candidato['nome_civil'] == 'JOVAIR DE OLIVEIRA ARANTES'
+        attrs_candidato['nome_civil'] = 'JOVAIR OLIVEIRA ARANTES'
+      elsif attrs_candidato['nome_civil'] == 'JOZIANE ARAUJO NASCIMENTO'
+        attrs_candidato['nome_civil'] = 'JOZIANE ARAUJO NASCIMENTO ROCHA'
+      elsif attrs_candidato['nome_civil'] == 'JOZIANE ARAUJO NASCIMENTO'
+        attrs_candidato['nome_civil'] = 'JOZIANE ARAUJO NASCIMENTO ROCHA'
+      elsif attrs_candidato['nome_civil'] == 'JOSÉ CARLOS NUNES JÚNIOR'
+        attrs_candidato['nome_civil'] = 'JOSE  CARLOS NUNES JUNIOR'
+
+      end
+
+      begin
+
+        c = Candidato.find_by(:nome_pra_pesquisa=>attrs_candidato['nome_civil'].to_minusculas_sem_acentos_e_cia)
+        c.update!(attrs_candidato)
+
+      rescue Exception => e
+        puts "candidato #{attrs_candidato['nome_civil']} não encontrado"
+      end
+    end
+
+  end
+
+  def self.attrs_candidato_from_linha_importacao linha_importacao
+
+    #linha_importacao = linha_importacao.split(/[;]/)
+
+    {'nome_parlamentar'     => linha_importacao[0].to_s.squish,
+     'titularidade'          => linha_importacao[3].to_s.squish,
+     'endereco'            => "#{linha_importacao[4].to_s.squish} #{linha_importacao[5].to_s.squish} #{linha_importacao[6].to_s.squish} #{linha_importacao[7].to_s.squish} #{linha_importacao[8].to_s.squish}",
+     'telefone'    => linha_importacao[9].to_s.squish,
+     'fax'           => linha_importacao[10].to_s.squish,
+     'mes_dia_aniversario' => "#{linha_importacao[11].to_s.squish} #{linha_importacao[12].to_s.squish}",
+     'email' => linha_importacao[13].to_s.squish,
+     'tratamento' => linha_importacao[15].to_s.squish,
+     'profissões'           => linha_importacao[16].to_s.squish,
+     'nome_civil'           => linha_importacao[17].to_s.squish
+   }
+  end
+
+
+  def calcula_total_em_doacoes
+    self._total_em_doacoes = 0.0
+    Doacao.do_candidato(self.id).each do |d|
+      self._total_em_doacoes += d.valor
+    end
+
+  end
 
   def self.carrega_dados_dos_cantidatos_a_deputado_federal
 

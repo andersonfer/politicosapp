@@ -44,7 +44,7 @@
     </td>
 
     <td>
-      <%= number_to_currency(("%.2f" % (@doacoes[partido.id.to_s].to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+      <%= number_to_currency(("%.2f" % (partido._total_em_doacoes.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
 
     </td>
 

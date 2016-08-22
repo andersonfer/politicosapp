@@ -2,10 +2,21 @@ class Partido
 
   include Mongoid::Document
 
-   field :nome,        :type=>String, :default=>nil
+  field :nome,        :type=>String, :default=>nil
+  field :_total_em_doacoes, :type=>Float, :default=>nil
 
-   validates_uniqueness_of :nome
 
+  validates_uniqueness_of :nome
+
+  #antes tem que processar as doacoes dos candidatos
+  def calcula_total_em_doacoes
+    self._total_em_doacoes = 0.0
+
+    Doacao.dos_candidatos(Candidato.dos_partidos(self.id).distinct(:id)).each do |d|
+      self._total_em_doacoes += d.valor
+    end
+
+  end
 
   def self.muda_o_campo_do_partido
     Candidato.all.each do |c|

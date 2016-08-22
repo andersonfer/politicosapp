@@ -9,7 +9,7 @@ class CandidatosController < ApplicationController
       @partidos[p.id.to_s] = p.nome
     end
 
-    @consulta_candidatos = Candidato.page(params['page']).per(7077)
+    @consulta_candidatos = Candidato.asc(:nome).page(params['page'])
     @candidatos = {}
     @consulta_candidatos.each do |c|
       @candidatos[c.id.to_s] = c
