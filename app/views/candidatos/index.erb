@@ -6,74 +6,100 @@
   <%= @consulta_candidatos.count %> candidatos encontrados <br>
 <% end %>
 
-<%= paginate @consulta_candidatos %>
+<div class="row">
+    <%= form_tag nil, :method=>'GET' do %>
+      <div class="col-lg-8">
+        <%= text_field_tag 'nome', params['nome'], :class=>'form-control'  %>
 
-<table class="table table-bordered table-hover" style="font-size:0.9em;">
+      </div>
 
-  <tr>
-    <th> # </th>
-    <th>
-      Nome
-    </th>
+      <div class="col-lg-4">
 
-    <th>
-      Estado
-    </th>
-
-    <th>
-      Partido
-    </th>
-
-    <th>Total em doações</th>
+        <%= submit_tag 'pesquisar', :class=>'form-control' %>
+      </div>
+    <%end%>
 
 
+</div>
 
-  </tr>
-
-<% index = 0 %>
-<%
-  offset = params['page'].to_i
-  offset = 1 if offset == 0
-  offset = (offset - 1) * 25
-  index = offset
- %>
-
-<%= form_tag nil, :method=>'GET' do %>
-  <%= text_field_tag 'nome', params['nome']  %>
-  <%= submit_tag 'pesquisar' %>
-<%end%>
-
-<% @totais.sort_by{|id,valor|valor}.reverse.each do |candidato_id,valor| %>
-
-
-  <tr>
-
-    <td> <%=index = index + 1 %> </td>
-
-    <td>
-      <%= @candidatos[candidato_id].nome %>
-    </td>
-
-    <td>
-      <%= @candidatos[candidato_id].estado %>
-    </td>
-
-    <td>
-      <%= @partidos[@candidatos[candidato_id].partido_id.to_s] %>
-    </td>
-
-    <td>
-      <% total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
-      <%= link_to total, candidato_path(candidato_id) %>
-
-    </td>
-
-  </tr>
+<div class="row">
+  <div class='col-lg-12'>
+    <hr/>
+    <%= paginate @consulta_candidatos %>
+  </div>
+</div>
 
 
 
-<%end%>
 
 
-</table>
+
+
+<div class="row">
+  <div class='col-lg-12'>
+    <table class="table table-bordered table-hover" style="font-size:0.9em;">
+
+      <tr>
+        <th> # </th>
+        <th>
+          Nome
+        </th>
+
+        <th>
+          Estado
+        </th>
+
+        <th>
+          Partido
+        </th>
+
+        <th>Total em doações</th>
+
+
+      </tr>
+
+      <% index = 0 %>
+      <%
+        offset = params['page'].to_i
+        offset = 1 if offset == 0
+        offset = (offset - 1) * 25
+        index = offset
+       %>
+
+
+
+      <% @totais.sort_by{|id,valor|valor}.reverse.each do |candidato_id,valor| %>
+
+
+        <tr>
+
+          <td> <%=index = index + 1 %> </td>
+
+          <td>
+            <%= @candidatos[candidato_id].nome %>
+          </td>
+
+          <td>
+            <%= @candidatos[candidato_id].estado %>
+          </td>
+
+          <td>
+            <%= @partidos[@candidatos[candidato_id].partido_id.to_s] %>
+          </td>
+
+          <td>
+            <% total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+            <%= link_to total, candidato_path(candidato_id) %>
+
+          </td>
+
+        </tr>
+
+
+
+      <%end%>
+
+    </table>
+  </div>
+</div>
 

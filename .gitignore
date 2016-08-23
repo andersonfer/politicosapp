@@ -17,3 +17,5 @@
 /tmp
 
 /arquivos_mj/*
+
+.DS_Store
