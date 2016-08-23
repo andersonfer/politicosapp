@@ -19,6 +19,7 @@ class Doacao
 
   scope :dos_candidatos, ->(candidato_ids) {self.and(:candidato_id.in=>candidato_ids) }
   scope :do_candidato, ->(candidato_id) {self.and(:candidato_id=>candidato_id) }
+  scope :do_doador, ->(doador_id) {self.and(:doador_id=>doador_id)}
 
 
 

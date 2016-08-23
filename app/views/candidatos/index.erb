@@ -53,7 +53,7 @@
           Partido
         </th>
 
-        <th>Total em doações</th>
+        <th style="text-align:right;">Total em doações (R$)</th>
 
 
       </tr>
@@ -87,8 +87,8 @@
             <%= @partidos[@candidatos[candidato_id].partido_id.to_s] %>
           </td>
 
-          <td>
-            <% total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+          <td style="text-align:right;">
+            <% total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit:'', separator: ",", delimiter: ".") %>
             <%= link_to total, candidato_path(candidato_id) %>
 
           </td>

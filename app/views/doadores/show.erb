@@ -1,20 +1,36 @@
 <% content_for :titulo_tela do %>
-  <%= @doador.nome %> - <%= @doador.cnpj_cpf %>
+
+  <div class="row">
+    <div class= "col-lg-12">
+
+      <div class="pull-left">
+
+        <%= @doador.nome %> <br/>
+        <%= @doador.cnpj_cpf_formatado %>
+      </div>
+
+      <div class="pull-right" style="text-align:right;font-weight:normal;font-size:0.8em;font-style:italic;">
+
+        <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %> <br/>
+        <%= @doacoes.count %> doações
+
+      </div>
+    </div>
+
+  </div>
 <% end %>
 
 <% content_for :lead do %>
-  <%= @doacoes.count %> doações - <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
 <% end %>
 
 
 <table class="table table-bordered table-hover" style="font-size:0.9em;text-align:center">
 
   <tr >
-    <th style="text-align:center">
-      Data da doação
-    </th>
 
-    <th style="text-align:center">
+    <th>#</th>
+
+    <th style="text-align:left">
       Candidato
     </th>
 
@@ -31,38 +47,47 @@
       CPF/CNPJ
     </th>
 
-    <th style="text-align:center">
-      Valor
+    <th style="text-align:right">
+      Qtde Doações
+    </th>
+
+    <th style="text-align:right">
+      Valor Total (R$)
     </th>
 
   </tr>
 
-  <% @doacoes.each do |doacao| %>
+  <% index = 0 %>
+
+  <% @totais_por_candidato.each do |candidato_id,valor| %>
 
     <tr>
-      <td width="10%">
-        <%= doacao.data.strftime("%d/%m/%y") %>
+
+      <td style="text-align:left"> <%= index+= 1 %>  </td>
+
+      <td style="text-align:left">
+        <%= link_to @candidatos[candidato_id].nome, candidato_path(candidato_id) %>
       </td>
 
       <td>
-        <%= @candidatos[doacao.candidato_id.to_s].nome %>
+        <%= @candidatos[candidato_id].partido.nome %>
       </td>
 
       <td>
-        <%= @candidatos[doacao.candidato_id.to_s].partido.nome %>
+        <%= @candidatos[candidato_id].estado %>
       </td>
 
       <td>
-        <%= @candidatos[doacao.candidato_id.to_s].estado %>
+        <%= @candidatos[candidato_id].cnpj_formatado %>
       </td>
 
-      <td>
-        <%= @candidatos[doacao.candidato_id.to_s].cnpj %>
+      <td style="text-align:right">
+        <%= valor[:qtde] %>
       </td>
 
       <td style="text-align:right">
 
-        <%=number_to_currency(("%.2f" % (doacao.valor.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+        <%=number_to_currency(("%.2f" % (valor[:total].to_f/100)), unit: "", separator: ",", delimiter: ".") %>
       </td>
     </tr>
 
@@ -71,8 +96,8 @@
   <%end%>
 
   <tr>
-    <td colspan="6" style="text-align:center;font-size:1.1em;font-weight:bold">
-      Total em Doações: <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+    <td colspan="7" style="text-align:right;font-size:1.4em;font-weight:bold">
+      <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
 
 
 

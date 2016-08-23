@@ -2,19 +2,29 @@ class DoadoresController < ApplicationController
 
   def index
 
-    @doadores = Doador.all.order(nome: :asc)
+    @doadores = Doador.all.order(_total_em_doacoes: :desc).page(params['page'])
 
   end
 
   def show
     @doador = Doador.find params['id']
     @doacoes = @doador.doacoes.order(valor: :desc)
-
+    candidato_ids = @doacoes.distinct(:candidato_id)
     @candidatos = {}
-    Candidato.all.each do |c|
+
+    Candidato.where(:id.in=>candidato_ids).each do |c|
       @candidatos[c.id.to_s] = c
     end
 
+    @totais_por_candidato = {}
+
+    @doacoes.each do |d|
+      @totais_por_candidato[d.candidato_id.to_s] = {:total=>0.0, :qtde=>0} if not @totais_por_candidato[d.candidato_id.to_s]
+      @totais_por_candidato[d.candidato_id.to_s][:total] += d.valor
+      @totais_por_candidato[d.candidato_id.to_s][:qtde] += 1
+    end
+
+    @totais_por_candidato = @totais_por_candidato.sort_by {|candidato_id,valor| -valor[:total]}
 
     @total = @doacoes.sum(:valor)
 

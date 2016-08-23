@@ -5,10 +5,31 @@ class Doador
   field :nome, type:String, default:nil
   field :cnpj_cpf, type:String, default:nil
 
+  field :_total_em_doacoes, :type=>Float, :default=>nil
+
   has_many :doacoes, class_name:'Doacao'
 
 
   validates_uniqueness_of :cnpj_cpf
+
+  def calcula_total_em_doacoes
+    self._total_em_doacoes = 0.0
+
+    Doacao.do_doador(self.id).each do |d|
+      self._total_em_doacoes += d.valor
+    end
+
+  end
+
+
+
+  def cnpj_cpf_formatado
+    if self.cnpj_cpf and self.cnpj_cpf.size == 11
+      "#{self.cnpj_cpf[0..2]}.#{self.cnpj_cpf[3..5]}.#{self.cnpj_cpf[6..8]}-#{self.cnpj_cpf[9..10]}"
+    else
+      "#{self.cnpj_cpf[0..1]}.#{self.cnpj_cpf[2..4]}.#{self.cnpj_cpf[5..7]}/#{self.cnpj_cpf[8..11]}-#{self.cnpj_cpf[12..13]}"
+    end
+  end
 
   def self.carrega_doadores_para_deputado_federal
 

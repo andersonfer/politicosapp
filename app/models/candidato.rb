@@ -39,6 +39,10 @@ class Candidato
 
   validates_uniqueness_of :sequencial
 
+  def cnpj_formatado
+    "#{self.cnpj[0..1]}.#{self.cnpj[2..4]}.#{self.cnpj[5..7]}/#{self.cnpj[8..11]}-#{self.cnpj[12..13]}"
+  end
+
   def calcula_nome_pra_pesquisa
 
     self.nome_pra_pesquisa = self.nome.to_minusculas_sem_acentos_e_cia
