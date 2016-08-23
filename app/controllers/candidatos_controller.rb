@@ -10,6 +10,7 @@ class CandidatosController < ApplicationController
     end
 
     @consulta_candidatos = Candidato.asc(:nome).page(params['page'])
+    @consulta_candidatos = @consulta_candidatos.where(:nome_pra_pesquisa=>/#{params['nome'].to_minusculas_sem_acentos_e_cia}/) if not params['nome'].blank?
     @candidatos = {}
     @consulta_candidatos.each do |c|
       @candidatos[c.id.to_s] = c

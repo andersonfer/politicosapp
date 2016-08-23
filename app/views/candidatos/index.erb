@@ -38,6 +38,11 @@
   index = offset
  %>
 
+<%= form_tag nil, :method=>'GET' do %>
+  <%= text_field_tag 'nome', params['nome']  %>
+  <%= submit_tag 'pesquisar' %>
+<%end%>
+
 <% @totais.sort_by{|id,valor|valor}.reverse.each do |candidato_id,valor| %>
 
 
