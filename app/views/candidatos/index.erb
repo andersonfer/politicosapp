@@ -55,6 +55,8 @@
 
         <th style="text-align:right;">Total em doações (R$)</th>
 
+        <th> </th>
+
 
       </tr>
 
@@ -88,10 +90,12 @@
           </td>
 
           <td style="text-align:right;">
-            <% total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit:'', separator: ",", delimiter: ".") %>
-            <%= link_to total, candidato_path(candidato_id) %>
+            <%= total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit:'', separator: ",", delimiter: ".") %>
+
 
           </td>
+
+          <td style="text-align:right;"> <%= link_to 'doadores', candidato_path(candidato_id) %> </td>
 
         </tr>
 

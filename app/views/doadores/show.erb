@@ -67,6 +67,7 @@
 
       <td style="text-align:left">
         <%= link_to @candidatos[candidato_id].nome, candidato_path(candidato_id) %>
+
       </td>
 
       <td>
@@ -87,7 +88,8 @@
 
       <td style="text-align:right">
 
-        <%=number_to_currency(("%.2f" % (valor[:total].to_f/100)), unit: "", separator: ",", delimiter: ".") %>
+        <% total = valor[:direto][:total].to_f + valor[:indireto][:total].to_f %>
+        <%=number_to_currency(("%.2f" % (total/100)), unit: "", separator: ",", delimiter: ".") %>
       </td>
     </tr>
 

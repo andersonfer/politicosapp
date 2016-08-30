@@ -7,7 +7,15 @@ Rails.application.routes.draw do
 
 
   resources :candidatos, :only=>['index', 'show'] do
+    resources :doadores, :only=>['show'] do
+      resources :doacoes, :only=>['index']
+    end
+
+    member do
+      get :doacoes
+    end
   end
+
 
   resources :doadores, :only=>['index', 'show'] do
   end
@@ -18,7 +26,7 @@ Rails.application.routes.draw do
   resources :partidos, :only=>['index', 'new'] do
   end
 
-  namespace :conteudo do 
+  namespace :conteudo do
     get :lrf
   end
 

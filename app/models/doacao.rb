@@ -14,6 +14,7 @@ class Doacao
   belongs_to :candidato, :inverse_of=>nil
   belongs_to :doador, :inverse_of=>nil
   belongs_to :doador_originario, :inverse_of=>nil, :class_name=>'Doador'
+  belongs_to :doador_intermediario, :inverse_of=>nil, :class_name=>'Doador'
 
   validates_presence_of :candidato,:doador,:valor
 
@@ -21,6 +22,16 @@ class Doacao
   scope :do_candidato, ->(candidato_id) {self.and(:candidato_id=>candidato_id) }
   scope :do_doador, ->(doador_id) {self.and(:doador_id=>doador_id)}
 
+
+  def self.migra_doacao
+    Doacao.where(:doador_originario_id.ne=>nil).each do |d|
+      d.doador_intermediario_id = d.doador_id
+      d.doador_id = d.doador_originario_id
+      d.doador_originario_id = nil
+      d.save!
+    end
+
+  end
 
 
   def self.carrega_doacoes_dos_cantidatos_a_deputado_federal

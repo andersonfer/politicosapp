@@ -28,6 +28,7 @@
 
   <tr >
 
+    <th>#</th>
 
     <th style="text-align:left">
       Doador
@@ -48,9 +49,16 @@
 
   </tr>
 
+  <% index = 0 %>
+
   <% @doacoes_por_doador.each do |doador_id,d| %>
 
     <tr>
+
+      <td>
+        <%= index += 1 %>
+      </td>
+
 
       <td style="text-align:left">
         <%= link_to @doadores[doador_id].nome, doador_path(doador_id) %>
@@ -62,8 +70,10 @@
 
       </td>
 
-      <td>
-        <%= d[:qtde] %>
+      <td >
+        <%= link_to d[:qtde], candidato_doador_doacoes_path(@candidato.id, doador_id), :class=>'btn btn-xs btn-primary', :style=>'width:40px;'  %>
+
+
       </td>
 
 
@@ -78,7 +88,7 @@
   <%end%>
 
   <tr>
-    <td colspan="4" style="text-align:right;font-size:1.1em;font-weight:bold">
+    <td colspan="5" style="text-align:right;font-size:1.1em;font-weight:bold">
       <%=number_to_currency(("%.2f" % (@total.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
 
 

@@ -1,0 +1,93 @@
+<% content_for :titulo_tela do %>
+
+  <div class="row">
+    <div class= "col-lg-12">
+
+      <div class="pull-left">
+
+        <i class="fa fa-money"></i> <%= @doador.nome %> <br/>
+        <i class="fa fa-user"></i> <%= @candidato.nome %>
+      </div>
+
+      <div class="pull-right" style="text-align:right;font-weight:normal;font-size:0.8em;font-style:italic;">
+
+        <%=number_to_currency(("%.2f" % (@doacoes.sum(:valor)/100)), unit: "R$ ", separator: ",", delimiter: ".") %> <br/>
+
+      </div>
+    </div>
+
+  </div>
+<% end %>
+
+<% content_for :lead do %>
+<% end %>
+
+
+<table class="table table-bordered" style="font-size:0.9em;text-align:center">
+
+  <tr >
+
+    <th>#</th>
+
+    <th style="text-align:left">
+      Data
+    </th>
+
+    <th>Recibo Eleitoral</th>
+
+    <th style="text-align:left">Intermediário</th>
+
+    <th style="text-align:right">
+      Valor (R$)
+    </th>
+
+
+  </tr>
+
+  <% total = 0.0 %>
+
+  <% @doacoes.each_with_index do |d,index| %>
+
+    <% total += d.valor %>
+
+    <tr>
+
+      <td style="text-align:left"> <%= index + 1 %>  </td>
+
+
+      <td style="text-align:left">
+        <%= d.data.strftime('%d/%m/%y') %>
+      </td>
+
+      <td style="text-align:left;width:30%;">
+        <%= d.nro_recibo %>
+      </td>
+
+      <td style="text-align:left">
+        <%= d.doador_intermediario.nome %>
+      </td>
+
+      <td style="text-align:right">
+        <%=number_to_currency(("%.2f" % (d.valor/100)), unit: "", separator: ",", delimiter: ".") %>
+
+      </td>
+
+  </tr>
+
+
+
+  <%end%>
+
+  <tr>
+    <td colspan="7" style="text-align:right;font-size:1.4em;font-weight:bold">
+      <%=number_to_currency(("%.2f" % (total/100)), unit: "R$", separator: ",", delimiter: ".") %>
+
+
+
+    </td>
+
+
+  </tr>
+
+
+</table>

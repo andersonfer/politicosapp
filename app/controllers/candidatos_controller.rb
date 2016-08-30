@@ -10,7 +10,7 @@ class CandidatosController < ApplicationController
     end
 
     @consulta_candidatos = Candidato.desc(:_total_em_doacoes).page(params['page'])
-    nome_candidato = params['nome'].to_minusculas_sem_acentos_e_cia.split(" ").join(".*")
+    nome_candidato = params['nome'].to_s.to_minusculas_sem_acentos_e_cia.split(" ").join(".*")
     @consulta_candidatos = @consulta_candidatos.where(:nome_pra_pesquisa=>/#{nome_candidato}/) if not params['nome'].blank?
     @candidatos = {}
     @consulta_candidatos.each do |c|
