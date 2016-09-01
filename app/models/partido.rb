@@ -18,13 +18,6 @@ class Partido
 
   end
 
-  def self.muda_o_campo_do_partido
-    Candidato.all.each do |c|
-      c.nome_partido = c.partido
-      c.save
-    end
-  end
-
   def self.extrai_partidos_dos_candidatos
     Candidato.all.distinct(:nome_partido).each do |nome_partido|
       p = Partido.create(:nome=>nome_partido)

@@ -224,7 +224,7 @@ class Candidato
       candidato = Candidato.new(:sequencial=>c[0],
                                 :nome=>c[1],
                                 :estado=>c[2],
-                                :partido=>c[3],
+                                :nome_partido=>c[3],
                                 :numero=>c[4],
                                 :cnpj=>c[5],
                                 :candidato_a=>"deputado federal")
