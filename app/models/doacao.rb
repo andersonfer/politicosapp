@@ -23,16 +23,6 @@ class Doacao
   scope :do_doador, ->(doador_id) {self.and(:doador_id=>doador_id)}
 
 
-  def self.migra_doacao
-    Doacao.where(:doador_originario_id.ne=>nil).each do |d|
-      d.doador_intermediario_id = d.doador_id
-      d.doador_id = d.doador_originario_id
-      d.doador_originario_id = nil
-      d.save!
-    end
-
-  end
-
 
   def self.carrega_doacoes_dos_cantidatos_a_deputado_federal
 
@@ -54,23 +44,28 @@ class Doacao
         candidato = Candidato.find_by(:sequencial=>d[0])
         candidatos[candidato.sequencial] = candidato
       end
-      doacao.candidato_id = candidato.id.to_s
+      doacao.candidato_id = candidato.id
 
       doador = doadores[d[2]]
+
       if doador.nil?
         doador = Doador.find_by(:cnpj_cpf=>d[2])
         doadores[doador.cnpj_cpf] = doador
       end
-      doacao.doador_id = doador.id.to_s
 
-      if not d[4].blank?
+      if d[4].blank?
+        doacao.doador_id = doador.id
+      else
+        doacao.doador_intermediario_id = doador.id
 
-        doador_originario = doadores[d[4]]
-        if doador_originario.nil?
-          doador_originario = Doador.find_by(:cnpj_cpf=>d[4])
-          doadores[doador_originario.cnpj_cpf] = doador_originario
+        doador = doadores[d[4]]
+
+        if doador.nil?
+          doador = Doador.find_by(:cnpj_cpf=>d[4])
+          doadores[doador.cnpj_cpf] = doador
         end
-        doacao.doador_originario_id = doador_originario.id.to_s
+
+        doacao.doador_id = doador.id
 
       end
       if doacao.save!
