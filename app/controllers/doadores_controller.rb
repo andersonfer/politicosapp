@@ -24,20 +24,15 @@ class DoadoresController < ApplicationController
     @totais_por_candidato = {}
 
     @doacoes.each do |d|
-      @totais_por_candidato[d.candidato_id.to_s] = {:direto=>{:total=>0.0, :qtde=>0},:indireto=>{:total=>0.0, :qtde=>0}} if not @totais_por_candidato[d.candidato_id.to_s]
-      if d.doador_intermediario_id
-        @totais_por_candidato[d.candidato_id.to_s][:indireto][:total] += d.valor
-        @totais_por_candidato[d.candidato_id.to_s][:indireto][:qtde] += 1
+      @totais_por_candidato[d.candidato_id.to_s] = {:total=>0.0, :qtde=>0} if not @totais_por_candidato[d.candidato_id.to_s]
 
-      else
-        @totais_por_candidato[d.candidato_id.to_s][:direto][:total] += d.valor
-        @totais_por_candidato[d.candidato_id.to_s][:direto][:qtde] += 1
+      @totais_por_candidato[d.candidato_id.to_s][:total] += d.valor
+      @totais_por_candidato[d.candidato_id.to_s][:qtde] += 1
 
-      end
 
     end
 
-    @totais_por_candidato = @totais_por_candidato.sort_by {|candidato_id,valor| -(valor[:direto][:total] + valor[:indireto][:total])}
+    @totais_por_candidato = @totais_por_candidato.sort_by {|candidato_id,valor| -valor[:total]}
 
 
     @total = @doacoes.sum(:valor)
