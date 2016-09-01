@@ -90,7 +90,7 @@
           </td>
 
           <td style="text-align:right;">
-            <%= total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes/100)), unit:'', separator: ",", delimiter: ".") %>
+            <%= total = number_to_currency(("%.2f" % (@candidatos[candidato_id]._total_em_doacoes.to_f/100)), unit:'', separator: ",", delimiter: ".") %>
 
 
           </td>

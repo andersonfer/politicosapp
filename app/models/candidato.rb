@@ -45,7 +45,7 @@ class Candidato
 
   def calcula_nome_pra_pesquisa
 
-    self.nome_pra_pesquisa = self.nome.to_minusculas_sem_acentos_e_cia
+    self.nome_pra_pesquisa = self.nome.to_s.to_minusculas_sem_acentos_e_cia
   end
 
   def self.le_arquivo_deputados_federais
