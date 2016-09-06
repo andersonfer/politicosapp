@@ -43,7 +43,7 @@ class Doador
                             :cnpj_cpf=>d[2])
         if doador.save!
           doadores[doador.cnpj_cpf] = doador
-          puts "#{doador.nome} - #{doador.cnpj_cpf} salvo"
+          print ">"
         end
 
       end
@@ -55,7 +55,7 @@ class Doador
                                          :cnpj_cpf=>d[4])
           if doador_originario.save!
             doadores[doador_originario.cnpj_cpf] = doador_originario
-            puts "#{doador_originario.nome} - #{doador_originario.cnpj_cpf} salvo"
+            print ">"
           end
 
         end

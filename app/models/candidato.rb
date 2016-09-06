@@ -230,7 +230,7 @@ class Candidato
                                 :candidato_a=>"deputado federal")
 
       if candidato.save!
-        puts "candidato #{candidato.nome} - #{candidato.sequencial} salvo"
+        print "."
       end
 
     end
