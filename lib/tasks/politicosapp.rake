@@ -9,19 +9,19 @@ namespace :papp do
     Doador.carrega_doadores_para_deputado_federal
     Doacao.carrega_doacoes_dos_cantidatos_a_deputado_federal
 
-    Candidato.all.each do |c|
-      c.calcula_total_em_doacoes
-      c.save!
+    DadosUtil.percorrer_paginado(Candidato.all, 100) do |candidato|
+      candidato.calcula_total_em_doacoes
+      candidato.save!
     end
 
-    Doador.all.each do |d|
-      d.calcula_total_em_doacoes
-      d.save!
+    DadosUtil.percorrer_paginado(Doador.all, 100) do |doador|
+      doador.calcula_total_em_doacoes
+      doador.save!
     end
 
-    Partido.all.each do |p|
-      p.calcula_total_em_doacoes
-      p.save!
+    DadosUtil.percorrer_paginado(Partido.all, 100) do |partido|
+      partido.calcula_total_em_doacoes
+      partido.save!
     end
 
 

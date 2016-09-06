@@ -1,20 +1,9 @@
 TO.DO
 
+erro dos doadores
+eleitos
+partido
+estado
 
-
-
-
-
-
-
-
-
-
-
-Partido.each do |p|
-    p.calcula_total_em_doacoes
-    p.save!
-    puts "#{p.nome} - #{p._total_em_doacoes}"
-  end
 
 

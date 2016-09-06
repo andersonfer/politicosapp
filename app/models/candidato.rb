@@ -229,7 +229,7 @@ class Candidato
                                 :cnpj=>c[5],
                                 :candidato_a=>"deputado federal")
 
-      if candidato.save()
+      if candidato.save!
         puts "candidato #{candidato.nome} - #{candidato.sequencial} salvo"
       end
 
