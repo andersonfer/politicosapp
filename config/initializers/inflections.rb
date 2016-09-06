@@ -20,7 +20,8 @@
 ActiveSupport::Inflector.inflections do |inflect|
 
   # inflect.plural 'doador', 'doadores'
-  inflect.singular 'doadores', 'doador'
+  inflect.irregular 'doador', 'doadores'
+  inflect.irregular 'doacao', 'doacoes'
   inflect.singular 'leis_orcamentarias_anuais', 'lei_orcamentaria_anual'
 
 
