@@ -1,5 +1,6 @@
-namespace :papp do
+require File.join(File.dirname(__FILE__), '../dados_util.rb')
 
+namespace :papp do
 
   desc "inicializa_dados"
   task :inicializa_dados => :environment do
