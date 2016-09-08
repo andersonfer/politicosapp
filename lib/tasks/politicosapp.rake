@@ -9,6 +9,7 @@ namespace :papp do
     Partido.extrai_partidos_dos_candidatos
     Doador.carrega_doadores_para_deputado_federal
     Doacao.carrega_doacoes_dos_cantidatos_a_deputado_federal
+    Candidato.processa_csv_candidatos_eleitos_a_deputado_federal
 
     DadosUtil.percorrer_paginado(Candidato.all, 100) do |candidato|
       candidato.calcula_total_em_doacoes
@@ -24,6 +25,7 @@ namespace :papp do
       partido.calcula_total_em_doacoes
       partido.save!
     end
+
 
 
   end

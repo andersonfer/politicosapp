@@ -79,6 +79,9 @@
 
           <td>
             <%= @candidatos[candidato_id].nome %>
+            <% if @candidatos[candidato_id].eleito? %>
+              <i class="fa fa-trophy"></i>
+            <% end %>
           </td>
 
           <td>

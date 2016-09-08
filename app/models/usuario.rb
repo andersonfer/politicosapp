@@ -1,5 +1,7 @@
 class Usuario
 
+  # ?
+
   include Mongoid::Document
 
 

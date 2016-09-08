@@ -9,6 +9,9 @@ class Candidato
   field :nome,        :type=>String, :default=>nil
   field :estado,        :type=>String, :default=>nil
   #field :partido,        :type=>String, :default=>nil
+  field :coligacao,        :type=>String, :default=>nil
+  field :qtde_votos,        :type=>Integer, :default=>nil
+  field :eleito_em,        :type=>Integer, :default=>nil
   field :nome_partido,        :type=>String, :default=>nil
   field :numero,        :type=>String, :default=>nil
   field :cnpj,        :type=>String, :default=>nil
@@ -35,12 +38,19 @@ class Candidato
   has_many :doacoes, class_name:'Doacao'
 
   scope :dos_partidos, ->(partidos_ids) {self.and(:partido_id.in=>partidos_ids) }
+  scope :com_numero, ->(num) {self.and(:numero=>num) }
+  scope :do_estado, ->(est) {self.and(:estado=>est) }
+  scope :eleitos, ->() {self.and(:eleito_em.ne=>nil) }
 
 
   validates_uniqueness_of :sequencial
 
   def cnpj_formatado
     "#{self.cnpj[0..1]}.#{self.cnpj[2..4]}.#{self.cnpj[5..7]}/#{self.cnpj[8..11]}-#{self.cnpj[12..13]}"
+  end
+
+  def eleito?
+    (not self.eleito_em.nil?)
   end
 
   def calcula_nome_pra_pesquisa
@@ -235,6 +245,60 @@ class Candidato
 
     end
 
+  end
+
+
+  def self.processa_csv_candidatos_eleitos_a_deputado_federal
+
+    estados = []
+    partidos = {}
+
+    Partido.all.each do |p|
+      partidos[p.nome] = p
+    end
+
+    File.readlines("arquivos/deputados_federais_eleitos_eleicoes_2014.csv")[1..-1].each do |linha|
+      
+      dados = linha.split(';').map {|dado| dado.gsub('"', '').squish}
+
+      numero_candidato = dados[2]
+      partido = partidos[dados[4]]
+
+      if partido and not numero_candidato.blank?
+
+        #NOTE: se tem o número, é um candidato. 
+
+        estado = dados[0]
+        if estado.blank?
+          estado = estados.last
+        else
+          estados << estado
+        end
+
+        #NOTE: pula dados[1] pq ele é o cargo e a gente está apenas processando deputados federais.
+        #NOTE: pula dados[3] pq é o nome e não precisamos
+        #NOTE: pula dados[6] pq ele é o turno e todos os deputados federais são eleitos em 1o turno.
+
+        coligacao = dados[5]
+        qtde_votos = dados[7].gsub('.', '').to_i
+
+        if candidato = Candidato.com_numero(numero_candidato).do_estado(estado).first
+
+                    
+          candidato.coligacao = coligacao
+          candidato.qtde_votos = qtde_votos
+          candidato.eleito_em = 2014
+          candidato.save!
+          print '.'
+        else
+          puts "tem que arrumar esse bug do GOMIDE!!!"
+        end
+
+      end
+
+    end
+
+    true
   end
 
 
