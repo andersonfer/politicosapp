@@ -69,7 +69,7 @@ class Doacao
 
       end
       if doacao.save!
-        print "-"
+        print "d"
       end
     end
 
