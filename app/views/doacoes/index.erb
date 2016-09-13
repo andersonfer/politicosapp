@@ -64,7 +64,9 @@
       </td>
 
       <td style="text-align:left">
-        <%= d.doador_intermediario.nome %>
+        <% if d.doador_intermediario %>
+          <%= d.doador_intermediario.nome %>
+        <% end %>
       </td>
 
       <td style="text-align:right">

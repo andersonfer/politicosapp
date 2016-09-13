@@ -29,7 +29,7 @@ class Doacao
     candidatos = {}
     doadores = {}
 
-    CSV.foreach("doacoes_deputado_federal.csv") do |d|
+    CSV.foreach("doacoes_teste.csv") do |d|
       data_doacao = Date.strptime(d[6], '%Y-%m-%d')
 
       doacao = Doacao.new(:nro_recibo=>d[5],
