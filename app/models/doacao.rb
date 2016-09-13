@@ -26,10 +26,8 @@ class Doacao
 
   def self.carrega_doacoes_dos_cantidatos_a_deputado_federal
 
-    candidatos = {}
-    doadores = {}
 
-    CSV.foreach("doacoes_teste.csv") do |d|
+    CSV.foreach("doacoes_deputado_federal.csv") do |d|
       data_doacao = Date.strptime(d[6], '%Y-%m-%d')
 
       doacao = Doacao.new(:nro_recibo=>d[5],
@@ -39,32 +37,19 @@ class Doacao
                           :nro_documento=>d[9],
                           :fonte_recurso=>d[10])
 
-      candidato = candidatos[d[0]]
-      if candidato.nil?
-        candidato = Candidato.find_by(:sequencial=>d[0])
-        candidatos[candidato.sequencial] = candidato
-      end
+
+      candidato = Candidato.find_by(:sequencial=>d[0])
       doacao.candidato_id = candidato.id
 
-      doador = doadores[d[2]]
 
-      if doador.nil?
-        doador = Doador.find_by(:cnpj_cpf=>d[2])
-        doadores[doador.cnpj_cpf] = doador
-      end
+      doador = Doador.find_by(:cnpj_cpf=>d[2])
 
       if d[4].blank?
         doacao.doador_id = doador.id
       else
+
         doacao.doador_intermediario_id = doador.id
-
-        doador = doadores[d[4]]
-
-        if doador.nil?
-          doador = Doador.find_by(:cnpj_cpf=>d[4])
-          doadores[doador.cnpj_cpf] = doador
-        end
-
+        doador = Doador.find_by(:cnpj_cpf=>d[4])
         doacao.doador_id = doador.id
 
       end
