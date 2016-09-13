@@ -7,7 +7,6 @@
 <% end %>
 
 
-<%= paginate @consulta_partidos %>
 
 <table class="table table-bordered table-hover" style="font-size:0.9em;">
 
@@ -18,41 +17,50 @@
     </th>
 
 
-    <th>Total em doações</th>
+    <th style="text-align:right;">Total em doações (R$)</th>
+
+    <th></th>
 
 
 
   </tr>
 
-<% index = 0 %>
-<%
-  offset = params['page'].to_i
-  offset = 1 if offset == 0
-  offset = (offset - 1) * 25
-  index = offset
- %>
+  <% total = 0.0 %>
 
-<% @consulta_partidos.each do |partido| %>
+
+<% @consulta_partidos.each_with_index do |partido,index| %>
 
 
   <tr>
 
-    <td> <%=index = index + 1 %> </td>
+    <td> <%= index + 1 %> </td>
 
     <td>
       <%= partido.nome %>
     </td>
 
-    <td>
-      <%= number_to_currency(("%.2f" % (partido._total_em_doacoes.to_f/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+    <td style="text-align:right;">
+      <%= number_to_currency(("%.2f" % (partido._total_em_doacoes.to_f/100)), unit: "", separator: ",", delimiter: ".") %>
+      <% total += partido._total_em_doacoes.to_f %>
 
     </td>
+
+    <td style="text-align:right;"> <%= link_to 'candidatos', candidatos_path(partido_id: partido.id) %> </td>
+
+
 
   </tr>
 
 
 
 <%end%>
+
+<tr>
+  <td style="text-align:right;font-weight:bold;" colspan="3">
+    <%= number_to_currency(("%.2f" % (total/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+
+  </td>
+</tr>
 
 
 </table>

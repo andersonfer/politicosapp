@@ -6,10 +6,13 @@ class CandidatosController < ApplicationController
 
     Partido.all.each do |p|
 
-      @partidos[p.id.to_s] = p.nome
+      @partidos[p.id.to_s] = p
     end
 
-    @consulta_candidatos = Candidato.desc(:_total_em_doacoes).page(params['page'])
+    @consulta_candidatos = Candidato.all
+    @consulta_candidatos = @consulta_candidatos.do_partido(params['partido_id']) if not params['partido_id'].blank?
+    @consulta_candidatos = @consulta_candidatos.desc(:_total_em_doacoes).page(params['page'])
+
     nome_candidato = params['nome'].to_s.to_minusculas_sem_acentos_e_cia.split(" ").join(".*")
     @consulta_candidatos = @consulta_candidatos.where(:nome_pra_pesquisa=>/#{nome_candidato}/) if not params['nome'].blank?
     @candidatos = {}

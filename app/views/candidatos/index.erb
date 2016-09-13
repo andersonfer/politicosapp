@@ -1,9 +1,18 @@
+<% partido = @partidos[params['partido_id']] %>
+
 <% content_for :titulo_tela do %>
   Candidatos
+
+  <% if not params['partido_id'].blank? %>
+    do  <span style="font-size:1.5em;"> <%= partido.nome %> </span>
+  <% end %>
+
 <% end %>
 
 <% content_for :lead do %>
-  <%= @consulta_candidatos.count %> candidatos encontrados <br>
+  <%= @consulta_candidatos.count %> candidatos encontrados -
+  <%= number_to_currency(("%.2f" % (partido._total_em_doacoes/100)), unit:'R$', separator: ",", delimiter: ".") %>
+  <br>
 <% end %>
 
 <div class="row">
@@ -89,7 +98,7 @@
           </td>
 
           <td>
-            <%= @partidos[@candidatos[candidato_id].partido_id.to_s] %>
+            <%= @partidos[@candidatos[candidato_id].partido_id.to_s].nome %>
           </td>
 
           <td style="text-align:right;">
