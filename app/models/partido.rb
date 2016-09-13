@@ -12,7 +12,7 @@ class Partido
   def calcula_total_em_doacoes
     self._total_em_doacoes = 0.0
 
-    Doacao.dos_candidatos(Candidato.dos_partidos(self.id).distinct(:id)).each do |d|
+    Doacao.dos_candidatos(Candidato.do_partido(self.id).distinct(:id)).each do |d|
       self._total_em_doacoes += d.valor
     end
 

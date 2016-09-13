@@ -38,6 +38,7 @@ class Candidato
   has_many :doacoes, class_name:'Doacao'
 
   scope :dos_partidos, ->(partidos_ids) {self.and(:partido_id.in=>partidos_ids) }
+  scope :do_partido, ->(partidos_id) {self.and(:partido_id=>partidos_id) }
   scope :com_numero, ->(num) {self.and(:numero=>num) }
   scope :do_estado, ->(est) {self.and(:estado=>est) }
   scope :eleitos, ->() {self.and(:eleito_em.ne=>nil) }
@@ -258,7 +259,7 @@ class Candidato
     end
 
     File.readlines("arquivos/deputados_federais_eleitos_eleicoes_2014.csv")[1..-1].each do |linha|
-      
+
       dados = linha.split(';').map {|dado| dado.gsub('"', '').squish}
 
       numero_candidato = dados[2]
@@ -266,7 +267,7 @@ class Candidato
 
       if partido and not numero_candidato.blank?
 
-        #NOTE: se tem o número, é um candidato. 
+        #NOTE: se tem o número, é um candidato.
 
         estado = dados[0]
         if estado.blank?
@@ -284,7 +285,7 @@ class Candidato
 
         if candidato = Candidato.com_numero(numero_candidato).do_estado(estado).first
 
-                    
+
           candidato.coligacao = coligacao
           candidato.qtde_votos = qtde_votos
           candidato.eleito_em = 2014
