@@ -26,6 +26,7 @@ namespace :papp do
       partido.save!
     end
 
+    Partido.atualiza_numero_dos_partidos
 
 
   end
