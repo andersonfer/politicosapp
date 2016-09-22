@@ -8,6 +8,7 @@ class Doador
   field :_total_em_doacoes, :type=>Float, :default=>nil
 
   has_many :doacoes, class_name:'Doacao'
+  belongs_to :partido
 
 
   validates_uniqueness_of :cnpj_cpf
@@ -65,6 +66,104 @@ class Doador
     end
 
   end
+
+  def self.descobre_comites_financeiros
+    cnpjs_comites = []
+
+    estados_mais_BR = Partido::SIGLAS_ESTADOS << 'BR'
+
+    CSV.open("cnpjs_comites_financeiros.csv", "ab") do |csv|
+      estados_mais_BR.each do |estado|
+
+        Partido.distinct(:numero).each do |numero_partido|
+          puts "------------------- #{estado} ----------------- #{numero_partido}"
+          url = "http://inter01.tse.jus.br/spceweb.consulta.receitasdespesas2014/listaComiteDirecaoPartidaria.action?"
+          params = {
+          "nrPartido" =>numero_partido,
+          "siglaUf" => estado
+          }
+
+
+          begin
+            response = Net::HTTP.post_form(URI.parse(url),params)
+          rescue
+            puts "!!!!!!!!!!!!!  PALA NO #{estado} #{partido} !!!!!!!! #{url}"
+            next
+          end
+
+          pagina = Nokogiri::XML(response.body)
+
+          sequencial = ""
+
+          if pagina.css('.linhaPreenchida').size > 0 #quer dizer que existem comites praquele partido e praquele estado
+
+            pagina.css('a').each do |a_href|
+              sequencial =  a_href.children[0].text.strip
+
+
+              url = "http://inter01.tse.jus.br/spceweb.consulta.receitasdespesas2014/resumoReceitasByComite.action"
+              params = {
+                "sqComiteFinanceiro" => sequencial,
+                "sgUe" => estado,
+                "rb1"=>"on",
+                "rbTipo"=>"on",
+                "tipoEntrega"=>"0"
+
+              }
+
+              begin
+                response = Net::HTTP.post_form(URI.parse(url),params)
+              rescue
+                puts "!!!!!!!!!!!!!  PALA NO #{estado} #{partido} !!!!!!!! #{url}"
+                next
+              end
+
+
+              pagina = Nokogiri::XML(response.body)
+
+              if pagina.css('.linhaPreenchida').size > 0
+                dados_doador = [pagina.css('.linhaPreenchida').children[21].children.text.strip.gsub(/[\.\(\/-]/, ''),numero_partido,estado]
+                csv << dados_doador
+              end
+
+
+            end
+        end
+      end
+
+
+
+
+      end
+
+    end
+
+  end
+
+  def self.marca_comites_financeiros
+
+    Doador.update_all(:partido_id=>nil)
+
+    CSV.foreach("cnpjs_comites_financeiros.csv") do |dados_doador|
+
+      if doador = Doador.where(:cnpj_cpf=>dados_doador[0]).first
+        partido = Partido.find_by(:numero=>dados_doador[1])
+
+        doador.partido_id = partido.id
+
+        doador.save!
+
+      end
+
+
+    end
+
+  end
+
+  def comite_financeiro?
+    not (self.partido.nil?)
+  end
+
 
 
 end

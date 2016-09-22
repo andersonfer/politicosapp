@@ -28,6 +28,8 @@ namespace :papp do
 
     Partido.atualiza_numero_dos_partidos
 
+    Doador.marca_comites_financeiros
+
 
   end
 

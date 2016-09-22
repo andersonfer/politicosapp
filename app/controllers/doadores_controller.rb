@@ -4,6 +4,12 @@ class DoadoresController < ApplicationController
 
     @doadores = Doador.all.order(_total_em_doacoes: :desc).page(params['page'])
 
+    @partidos = {}
+
+    Partido.all.each do |p|
+      @partidos[p.id.to_s] = p
+    end
+
 
   end
 

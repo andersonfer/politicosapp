@@ -41,6 +41,11 @@
 
     <td style = "text-align:left;">
       <%= doador.nome %>
+      <% if doador.comite_financeiro? %>
+        - <%= @partidos[doador.partido_id.to_s].nome %>
+
+
+      <% end %>
     </td>
 
 
