@@ -13,7 +13,6 @@ class Doacao
 
   belongs_to :candidato, :inverse_of=>nil
   belongs_to :doador, :inverse_of=>nil
-  belongs_to :doador_originario, :inverse_of=>nil, :class_name=>'Doador'
   belongs_to :doador_intermediario, :inverse_of=>nil, :class_name=>'Doador'
 
   validates_presence_of :candidato,:doador,:valor
@@ -22,6 +21,13 @@ class Doacao
   scope :do_candidato, ->(candidato_id) {self.and(:candidato_id=>candidato_id) }
   scope :do_doador, ->(doador_id) {self.and(:doador_id=>doador_id)}
 
+  def from_partido?
+    (self.doador_intermediario.nil? and self.doador.comite_financeiro?)
+  end
+
+  def from_pessoa_via_partido?
+    ( (not self.doador_intermediario.nil?) and self.doador_intermediario.comite_financeiro?)
+  end
 
 
   def self.carrega_doacoes_dos_cantidatos_a_deputado_federal
