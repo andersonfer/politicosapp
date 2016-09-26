@@ -30,6 +30,11 @@ Rails.application.routes.draw do
     get :lrf
   end
 
+  namespace :p do
+    get 'site' => 'site#index'
+  end
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

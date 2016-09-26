@@ -1,0 +1,87 @@
+<table class="table">
+
+
+  <tr>
+    <th></th>
+    <th style="text-align:right;">Eleitos (<%= @resultados[:total_eleitos] %>) </th>
+    <th style="text-align:right;">Não Eleitos (<%= @resultados[:total_nao_eleitos] %>)  </th>
+    <th style="text-align:right;">Total</th>
+
+  </tr>
+
+
+  <tr>
+    <th>Doações diretas (R$)</th>
+
+    <td style="text-align:right;">
+      <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+      (<%= @percentuais[:eleitos][:_total_em_doacoes_pessoas_via_direta].round(2) * 100 %>%)
+    </td>
+    <td style="text-align:right;">
+      <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+      (<%= @percentuais[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].round(2) * 100 %>%)
+    </td>
+    <td style="text-align:right;">
+      <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+    </td>
+
+
+  </tr>
+
+  <tr>
+    <th>Doações de pessoas via partido</th>
+
+    <td style="text-align:right;">
+      <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+      (<%= @percentuais[:eleitos][:_total_em_doacoes_pessoas_via_partido].round(2) * 100 %>%)
+    </td>
+
+    <td style="text-align:right;">
+      <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+      (<%= @percentuais[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].round(2) * 100 %>%)
+    </td>
+
+    <td style="text-align:right;"> <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>  </td>
+  </tr>
+
+  <tr>
+      <th>Doações do partido</th>
+
+       <td style="text-align:right;">
+        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_partido].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+        (<%= @percentuais[:eleitos][:_total_em_doacoes_partido].round(2) * 100 %>%)
+      </td>
+
+      <td style="text-align:right;">
+        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_partido].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+        (<%= @percentuais[:nao_eleitos][:_total_em_doacoes_partido].round(2) * 100 %>%)
+      </td>
+
+      <td style="text-align:right;">
+        <%= number_to_currency( @resultados[:total][:_total_em_doacoes_partido].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+      </td>
+  </tr>
+
+  <tr>
+    <th>Total</th>
+
+    <td style="text-align:right;">
+      <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+      (<%= @percentuais[:eleitos][:_total_em_doacoes].round(2) * 100 %>%)
+    </td>
+    <td style="text-align:right;">
+      <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %> (<%= @percentuais[:nao_eleitos][:_total_em_doacoes].round(2) * 100 %>%)
+    </td>
+    <td style="text-align:right;"> <%= number_to_currency( @resultados[:total][:_total_em_doacoes].to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>  </td>
+  </tr>
+
+  <tr>
+    <th>média</th>
+    <td>
+
+    </td>
+
+  </tr>
+
+
+</table>
