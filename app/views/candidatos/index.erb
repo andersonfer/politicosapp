@@ -52,6 +52,7 @@
 
       <tr>
         <th> # </th>
+
         <th>
           Nome
         </th>
@@ -92,6 +93,8 @@
 
           <td> <%=index = index + 1 %> </td>
 
+
+
           <td>
             <%= @candidatos[candidato_id].nome %>
             <% if @candidatos[candidato_id].eleito? %>
@@ -120,7 +123,8 @@
           </td>
 
           <td style="text-align:right;">
-            <%= total = number_to_currency( @candidatos[candidato_id]._total_em_doacoes.to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %>
+            <%= total = number_to_currency( @candidatos[candidato_id]._total_em_doacoes.to_f/100 , unit:'', separator: ",", delimiter: ".", precision: 0) %> <br/>
+            (<%= @candidatos[candidato_id].ranking_total_em_doacoes %>)
           </td>
 
           <td style="text-align:right;"> <%= link_to 'doadores', candidato_path(candidato_id) %> </td>

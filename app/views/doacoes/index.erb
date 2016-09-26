@@ -66,6 +66,9 @@
       <td style="text-align:left">
         <% if d.doador_intermediario %>
           <%= d.doador_intermediario.nome %>
+          <% if d.doador_intermediario.comite_financeiro? %> -
+            <%= d.doador_intermediario.partido.nome %>
+          <% end %>
         <% end %>
       </td>
 

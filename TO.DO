@@ -8,8 +8,10 @@ TO.DO
   . comites financeiros
     avaliar se os cnpjs que nao foram encontrados realmente nao fizemra doacao pra deputado federal
 
+
 	. próximas tarefas
 		- separar as doações por tipo
+    - terminar de calcular os rankings de candidato
     - modelar estado
 
 

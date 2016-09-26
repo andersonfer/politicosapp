@@ -30,6 +30,8 @@ namespace :papp do
 
     Doador.marca_comites_financeiros
 
+    Candidato.calcula_rankings_doacoes
+
 
   end
 

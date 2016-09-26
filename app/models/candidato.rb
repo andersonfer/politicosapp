@@ -22,6 +22,8 @@ class Candidato
   field :_total_em_doacoes_pessoas_via_partido, :type=>Float, :default=>nil
 
 
+  field :ranking_total_em_doacoes, :type=>Integer, :default=>nil
+
   field :nome_parlamentar,        :type=>String, :default=>nil
   field :titularidade,        :type=>String, :default=>nil
   field :endereco,        :type=>String, :default=>nil
@@ -49,6 +51,17 @@ class Candidato
 
 
   validates_uniqueness_of :sequencial
+
+  def self.calcula_rankings_doacoes
+
+    Candidato.all.desc(:_total_em_doacoes).each_with_index do |c,index|
+      c.ranking_total_em_doacoes = index + 1
+      c.save!
+    end
+
+
+
+  end
 
   def cnpj_formatado
     "#{self.cnpj[0..1]}.#{self.cnpj[2..4]}.#{self.cnpj[5..7]}/#{self.cnpj[8..11]}-#{self.cnpj[12..13]}"
