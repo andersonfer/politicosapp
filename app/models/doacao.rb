@@ -32,6 +32,7 @@ class Doacao
 
   def self.carrega_doacoes_dos_cantidatos_a_deputado_federal
 
+    doacoes = []
 
     CSV.foreach("doacoes_deputado_federal.csv") do |d|
       data_doacao = Date.strptime(d[6], '%Y-%m-%d')
@@ -59,9 +60,14 @@ class Doacao
         doacao.doador_id = doador.id
 
       end
-      if doacao.save!
-        print "d"
+
+      doacoes << doacao
+
+      if doacoes.size > 400
+        Doacao.create!(doacoes)
+        doacoes = []
       end
+
     end
 
   end
