@@ -1,0 +1,289 @@
+<style type="text/css">
+
+  .valor{
+    font-weight:bold;
+    font-size:1.3em;
+  }
+
+  .descricao{
+    color:#777;
+    font-style:italic;
+    font-size:0.9em;
+  }
+</style>
+
+
+<table class="table">
+
+
+  <tr>
+    <th></th>
+    <th style="text-align:right;">Eleitos (<%= @resultados[:total_eleitos] %>) </th>
+    <th style="text-align:right;">Não Eleitos (<%= @resultados[:total_nao_eleitos] %>)  </th>
+    <th style="text-align:right;">Total</th>
+
+  </tr>
+
+
+  <tr>
+    <th>Doações diretas (R$)</th>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= (@percentuais_campo[:eleitos][:_total_em_doacoes_pessoas_via_direta] * 100).round(2) %>%
+        <span class = "descricao"> das doações diretas </span>
+      </div>
+
+      <div>
+        <%= (@percentuais_total_doacoes[:eleitos][:_total_em_doacoes_pessoas_via_direta] * 100).round(2) %>%
+      </div>
+
+
+
+      <div>
+
+        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class = "descricao"> por candidato </span>
+      </div>
+
+
+
+    </td>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= (@percentuais_campo[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta] * 100).round(2) %>%
+        <span class="descricao"> das doações diretas </span>
+      </div>
+
+      <div>
+        <%= (@percentuais_total_doacoes[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta] * 100).round(2) %>%
+      </div>
+
+
+
+      <div>
+        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+    </td>
+
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= number_to_currency( @medias[:total][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+
+    </td>
+
+
+  </tr>
+
+  <tr>
+    <th>Doações de pessoas via partido</th>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= (@percentuais_campo[:eleitos][:_total_em_doacoes_pessoas_via_partido] * 100).round(2) %>%
+        <span class="descricao"> das doações de pessoas via partido </span>
+      </div>
+
+      <div>
+        <%= (@percentuais_total_doacoes[:eleitos][:_total_em_doacoes_pessoas_via_partido] * 100).round(2) %>%
+      </div>
+
+
+
+      <div>
+        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+    </td>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= (@percentuais_campo[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido] * 100).round(2) %>%
+        <span class="descricao"> das doações de pessoas via partido </span>
+      </div>
+
+      <div>
+        <%= (@percentuais_total_doacoes[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido] * 100).round(2) %>%
+      </div>
+
+
+
+      <div>
+        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+    </td>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %> <br/>
+      </div>
+
+      <div>
+        <%= number_to_currency( @medias[:total][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+      <th>Doações dos partidos</th>
+
+       <td style="text-align:right;">
+
+        <div class="valor">
+          <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        </div>
+
+        <div>
+          <%= (@percentuais_campo[:eleitos][:_total_em_doacoes_partido] * 100).round(2) %>%
+          <span class="descricao"> das doações dos partidos </span>
+        </div>
+
+        <div>
+          <%= (@percentuais_total_doacoes[:eleitos][:_total_em_doacoes_partido] * 100).round(2) %>%
+        </div>
+
+
+
+        <div>
+          <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <span class="descricao"> por candidato </span>
+        </div>
+
+      </td>
+
+      <td style="text-align:right;">
+
+        <div class="valor">
+          <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        </div>
+
+        <div>
+          <%= (@percentuais_campo[:nao_eleitos][:_total_em_doacoes_partido] * 100).round(2) %>%
+          <span class="descricao"> das doações dos partidos </span>
+        </div>
+
+        <div>
+          <%= (@percentuais_total_doacoes[:nao_eleitos][:_total_em_doacoes_partido] * 100).round(2) %>%
+        </div>
+
+
+
+        <div>
+          <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <span class="descricao"> por candidato </span>
+        </div>
+
+      </td>
+
+      <td style="text-align:right;">
+
+        <div class="valor">
+          <%= number_to_currency( @resultados[:total][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        </div>
+
+        <div>
+          <%= number_to_currency( @medias[:total][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <span class="descricao"> por candidato </span>
+        </div>
+      </td>
+  </tr>
+
+  <tr>
+    <th>Total</th>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= (@percentuais_campo[:eleitos][:_total_em_doacoes] * 100).round(2) %>%
+        <span class="descricao"> do total de doações </span>
+      </div>
+
+      <div>
+        <%= (@percentuais_total_doacoes[:eleitos][:_total_em_doacoes] * 100).round(2) %>%
+      </div>
+
+
+
+      <div>
+        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+
+    </td>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= (@percentuais_campo[:nao_eleitos][:_total_em_doacoes] * 100).round(2) %>%
+        <span class="descricao"> do total de doações</span>
+      </div>
+
+      <div>
+      <%= (@percentuais_total_doacoes[:nao_eleitos][:_total_em_doacoes] * 100).round(2) %>%
+
+
+      <div>
+        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+    </td>
+
+    <td style="text-align:right;">
+
+      <div class="valor">
+        <%= number_to_currency( @resultados[:total][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+      </div>
+
+      <div>
+        <%= number_to_currency( @medias[:total][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <span class="descricao"> por candidato </span>
+      </div>
+
+    </td>
+  </tr>
+
+
+
+
+</table>

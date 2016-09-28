@@ -1,8 +1,7 @@
-class P::SiteController < ApplicationController
+class NumerosController < ApplicationController
 
-  layout 'publico'
 
-  def index
+  def medias
 
     @resultados =
     { :eleitos =>     { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0},
@@ -28,19 +27,43 @@ class P::SiteController < ApplicationController
 
     end
 
-    @percentuais =
+    @percentuais_campo =
     { :eleitos =>     { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0},
       :nao_eleitos => { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0},
     }
 
+    @medias =
+    { :eleitos =>     { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0},
+      :nao_eleitos => { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0},
+      :total =>       { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0}
+
+    }
+
+    @percentuais_total_doacoes =
+    { :eleitos =>     { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0},
+      :nao_eleitos => { :_total_em_doacoes => 0.0, :_total_em_doacoes_partido => 0.0, :_total_em_doacoes_pessoas_via_direta => 0.0, :_total_em_doacoes_pessoas_via_partido => 0.0},
+    }
+
+
     [:_total_em_doacoes, :_total_em_doacoes_partido, :_total_em_doacoes_pessoas_via_direta, :_total_em_doacoes_pessoas_via_partido].each do |campo|
 
       @resultados[:total][campo] = @resultados[:eleitos][campo] + @resultados[:nao_eleitos][campo]
-      @percentuais[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:total][campo]
-      @percentuais[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:total][campo]
+
+      @percentuais_campo[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:total][campo]
+      @percentuais_campo[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:total][campo]
+
+      @percentuais_total_doacoes[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:eleitos][:_total_em_doacoes]
+      @percentuais_total_doacoes[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:nao_eleitos][:_total_em_doacoes]
+
+      @medias[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:total_eleitos]
+      @medias[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:total_nao_eleitos]
+      @medias[:total][campo] = (@resultados[:eleitos][campo] + @resultados[:nao_eleitos][campo]) / (@resultados[:total_eleitos] + @resultados[:total_nao_eleitos])
+
 
 
     end
+
+
 
 
 

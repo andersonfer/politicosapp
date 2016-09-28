@@ -26,13 +26,14 @@ Rails.application.routes.draw do
   resources :partidos, :only=>['index', 'new'] do
   end
 
+  namespace :numeros do
+    get :medias
+  end
+
   namespace :conteudo do
     get :lrf
   end
 
-  namespace :p do
-    get 'site' => 'site#index'
-  end
 
 
   # Example of regular route:
