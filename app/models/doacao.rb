@@ -61,11 +61,12 @@ class Doacao
 
       end
 
-      doacoes << doacao
+      doacoes << doacao.as_document
 
       if doacoes.size > 400
         Doacao.create!(doacoes)
         doacoes = []
+        print 'D'
       end
 
     end
