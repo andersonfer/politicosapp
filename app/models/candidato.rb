@@ -260,7 +260,10 @@ class Candidato
 
   end
 
-  def self.processa_csv_candidatos_a_deputado_federal
+  def self.processa_csv_candidatos_a_deputado_federal tamanho_pagina=500
+
+    candidatos = []
+
     CSV.foreach("candidatos_a_deputado_federal.csv") do |c|
 
       candidato = Candidato.new(:sequencial=>c[0],
@@ -271,11 +274,17 @@ class Candidato
                                 :cnpj=>c[5],
                                 :candidato_a=>"deputado federal")
 
-      if candidato.save!
-        print "C"
+      candidatos << candidato.as_document
+
+      if candidatos.size > tamanho_pagina 
+        Candidato.create!(candidatos)
+        candidatos = []
+        print "."
       end
 
     end
+
+    Candidato.create!(candidatos)
 
   end
 
@@ -315,13 +324,12 @@ class Candidato
         qtde_votos = dados[7].gsub('.', '').to_i
 
         if candidato = Candidato.com_numero(numero_candidato).do_estado(estado).first
-
-
+          
           candidato.coligacao = coligacao
           candidato.qtde_votos = qtde_votos
           candidato.eleito_em = 2014
           candidato.save!
-          print '.'
+
         else
           puts "tem que arrumar esse bug do GOMIDE!!!"
         end

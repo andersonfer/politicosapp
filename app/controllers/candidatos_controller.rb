@@ -9,7 +9,7 @@ class CandidatosController < ApplicationController
       @partidos[p.id.to_s] = p
     end
 
-    @consulta_candidatos = Candidato.eleitos
+    @consulta_candidatos = Candidato.all
     @consulta_candidatos = @consulta_candidatos.do_partido(params['partido_id']) if not params['partido_id'].blank?
     @consulta_candidatos = @consulta_candidatos.desc(:_total_em_doacoes).page(params['page'])
 

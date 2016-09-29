@@ -107,7 +107,7 @@
           </td>
 
           <td>
-            <%= @partidos[@candidatos[candidato_id].partido_id.to_s].nome %>
+            <%= @partidos[@candidatos[candidato_id].partido_id.to_s].nome if @partidos[@candidatos[candidato_id].partido_id.to_s] %>
           </td>
 
           <td style="text-align:right;">

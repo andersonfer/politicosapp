@@ -30,7 +30,7 @@ class Doacao
   end
 
 
-  def self.carrega_doacoes_dos_cantidatos_a_deputado_federal
+  def self.carrega_doacoes_dos_cantidatos_a_deputado_federal tamanho_pagina=500
 
     doacoes = []
 
@@ -63,13 +63,15 @@ class Doacao
 
       doacoes << doacao.as_document
 
-      if doacoes.size > 400
+      if doacoes.size > tamanho_pagina
         Doacao.create!(doacoes)
         doacoes = []
-        print 'D'
+        print '.'
       end
 
     end
+
+    Doacao.create!(doacoes)
 
   end
 

@@ -6,7 +6,7 @@
   }
 
   .descricao{
-    color:#777;
+    color:#888;
     font-style:italic;
     font-size:0.9em;
   }
@@ -15,23 +15,37 @@
 
 <table class="table">
 
-
   <tr>
+    
     <th></th>
-    <th style="text-align:right;">Eleitos (<%= @resultados[:total_eleitos] %>) </th>
-    <th style="text-align:right;">Não Eleitos (<%= @resultados[:total_nao_eleitos] %>)  </th>
-    <th style="text-align:right;">Total</th>
+    
+    <th>
+      Eleitos 
+      (<%= @resultados[:total_eleitos] %>) 
+    </th>
+
+    <th>
+      Não Eleitos 
+      (<%= @resultados[:total_nao_eleitos] %>)  
+    </th>
+
+    <th>
+      Total
+    </th>
 
   </tr>
 
 
   <tr>
-    <th>Doações diretas (R$)</th>
 
-    <td style="text-align:right;">
+    <th>
+      Doações diretas (R$)
+    </th>
+
+    <td>
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
@@ -46,8 +60,7 @@
 
 
       <div>
-
-        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit:'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class = "descricao"> por candidato </span>
       </div>
 
@@ -55,10 +68,10 @@
 
     </td>
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
@@ -73,20 +86,20 @@
 
 
       <div>
-        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
     </td>
 
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
-        <%= number_to_currency( @medias[:total][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:total][:_total_em_doacoes_pessoas_via_direta].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
 
@@ -98,10 +111,10 @@
   <tr>
     <th>Doações de pessoas via partido</th>
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
@@ -116,15 +129,15 @@
 
 
       <div>
-        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
     </td>
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
@@ -139,19 +152,19 @@
 
 
       <div>
-        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
     </td>
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %> <br/>
+        <%= number_to_currency( @resultados[:total][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %> <br/>
       </div>
 
       <div>
-        <%= number_to_currency( @medias[:total][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:total][:_total_em_doacoes_pessoas_via_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
     </td>
@@ -160,10 +173,10 @@
   <tr>
       <th>Doações dos partidos</th>
 
-       <td style="text-align:right;">
+       <td >
 
         <div class="valor">
-          <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         </div>
 
         <div>
@@ -178,16 +191,16 @@
 
 
         <div>
-          <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
           <span class="descricao"> por candidato </span>
         </div>
 
       </td>
 
-      <td style="text-align:right;">
+      <td >
 
         <div class="valor">
-          <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         </div>
 
         <div>
@@ -202,20 +215,20 @@
 
 
         <div>
-          <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
           <span class="descricao"> por candidato </span>
         </div>
 
       </td>
 
-      <td style="text-align:right;">
+      <td >
 
         <div class="valor">
-          <%= number_to_currency( @resultados[:total][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <%= number_to_currency( @resultados[:total][:_total_em_doacoes_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         </div>
 
         <div>
-          <%= number_to_currency( @medias[:total][:_total_em_doacoes_partido].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+          <%= number_to_currency( @medias[:total][:_total_em_doacoes_partido].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
           <span class="descricao"> por candidato </span>
         </div>
       </td>
@@ -224,10 +237,10 @@
   <tr>
     <th>Total</th>
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
@@ -242,16 +255,16 @@
 
 
       <div>
-        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
 
     </td>
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:nao_eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
@@ -264,19 +277,19 @@
 
 
       <div>
-        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:nao_eleitos][:_total_em_doacoes].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
     </td>
 
-    <td style="text-align:right;">
+    <td >
 
       <div class="valor">
-        <%= number_to_currency( @resultados[:total][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @resultados[:total][:_total_em_doacoes].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
       </div>
 
       <div>
-        <%= number_to_currency( @medias[:total][:_total_em_doacoes].to_f/100 , unit: 'R$', separator: ",", delimiter: ".", precision: 0) %>
+        <%= number_to_currency( @medias[:total][:_total_em_doacoes].to_f/100 , unit: 'R$ ', separator: ",", delimiter: ".", precision: 0) %>
         <span class="descricao"> por candidato </span>
       </div>
 

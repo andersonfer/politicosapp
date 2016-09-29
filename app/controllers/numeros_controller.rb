@@ -49,15 +49,15 @@ class NumerosController < ApplicationController
 
       @resultados[:total][campo] = @resultados[:eleitos][campo] + @resultados[:nao_eleitos][campo]
 
-      @percentuais_campo[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:total][campo]
-      @percentuais_campo[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:total][campo]
+      @percentuais_campo[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:total][campo] if @resultados[:total][campo] > 0.0
+      @percentuais_campo[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:total][campo] if @resultados[:total][campo] > 0.0
 
-      @percentuais_total_doacoes[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:eleitos][:_total_em_doacoes]
-      @percentuais_total_doacoes[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:nao_eleitos][:_total_em_doacoes]
+      @percentuais_total_doacoes[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:eleitos][:_total_em_doacoes] if @resultados[:eleitos][:_total_em_doacoes] > 0.0
+      @percentuais_total_doacoes[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:nao_eleitos][:_total_em_doacoes] if @resultados[:nao_eleitos][:_total_em_doacoes] > 0.0
 
-      @medias[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:total_eleitos]
-      @medias[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:total_nao_eleitos]
-      @medias[:total][campo] = (@resultados[:eleitos][campo] + @resultados[:nao_eleitos][campo]) / (@resultados[:total_eleitos] + @resultados[:total_nao_eleitos])
+      @medias[:eleitos][campo] = @resultados[:eleitos][campo] / @resultados[:total_eleitos] if @resultados[:total_eleitos] > 0.0
+      @medias[:nao_eleitos][campo] = @resultados[:nao_eleitos][campo] / @resultados[:total_nao_eleitos] if @resultados[:total_nao_eleitos] > 0.0
+      @medias[:total][campo] = (@resultados[:eleitos][campo] + @resultados[:nao_eleitos][campo]) / (@resultados[:total_eleitos] + @resultados[:total_nao_eleitos]) if (@resultados[:total_eleitos] + @resultados[:total_nao_eleitos]) > 0.0
 
 
 

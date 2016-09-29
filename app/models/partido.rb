@@ -27,7 +27,6 @@ class Partido
     Candidato.all.distinct(:nome_partido).each do |nome_partido|
       p = Partido.create(:nome=>nome_partido)
       Candidato.where(:nome_partido=>nome_partido).update_all(:partido_id=>p.id)
-      print "P"
     end
   end
 
@@ -36,7 +35,6 @@ class Partido
       numero_partido = Candidato.do_partido(partido.id).first.numero[0..1]
       partido.numero = numero_partido
       partido.save!
-
     end
   end
 

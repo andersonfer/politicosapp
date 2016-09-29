@@ -7,7 +7,7 @@
 <% end %>
 
 Em 2014, houve <b> <%= Doacao.all.size %> doações </b> para candidatos a deputados federais <br/><br/><br/>
-Que totalizaram <b> R$ <%=  Doacao.sum(:valor)/100 %> </b> em doações<br/><br/><br/>
+Que totalizaram <b> R$ <%=  number_to_currency(Doacao.sum(:valor)/100) %> </b> em doações<br/><br/><br/>
 
 muita grana, não? <br/><br/><br/><br/>
 

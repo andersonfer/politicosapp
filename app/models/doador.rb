@@ -32,38 +32,42 @@ class Doador
     end
   end
 
-  def self.carrega_doadores_para_deputado_federal
+  def self.carrega_doadores_para_deputado_federal tamanho_pagina=500
 
     doadores = {}
+    doadores_para_salvar = []
 
     CSV.foreach("doacoes_deputado_federal.csv") do |d|
+
       doador = doadores[d[2]]
 
       if doador.nil?
-        doador = Doador.new(:nome=>d[1],
-                            :cnpj_cpf=>d[2])
-        if doador.save!
-          doadores[doador.cnpj_cpf] = doador
-          print "D"
-        end
-
+        doador = Doador.new(:nome=>d[1], :cnpj_cpf=>d[2])
+        doadores[doador.cnpj_cpf] = doador
+        doadores_para_salvar << doador.as_document
       end
 
       if not d[4].blank?
-        doador_originario = doadores[d[4]]
-        if doador_originario.nil?
-          doador_originario = Doador.new(:nome=>d[3],
-                                         :cnpj_cpf=>d[4])
-          if doador_originario.save!
-            doadores[doador_originario.cnpj_cpf] = doador_originario
-            print "D"
-          end
 
+        doador = doadores[d[4]]
+
+        if doador.nil?
+          doador = Doador.new(:nome=>d[3], :cnpj_cpf=>d[4])
+          doadores[doador.cnpj_cpf] = doador
+          doadores_para_salvar << doador.as_document
         end
 
       end
 
+      if doadores_para_salvar.size > tamanho_pagina 
+        Doador.create!(doadores_para_salvar)
+        doadores_para_salvar = []
+        print "."
+      end
+
     end
+
+    Doador.create!(doadores_para_salvar)
 
   end
 
@@ -148,13 +152,9 @@ class Doador
 
       if doador = Doador.where(:cnpj_cpf=>dados_doador[0]).first
         partido = Partido.find_by(:numero=>dados_doador[1])
-
         doador.partido_id = partido.id
-
         doador.save!
-
       end
-
 
     end
 
