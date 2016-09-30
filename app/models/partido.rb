@@ -11,7 +11,6 @@ class Partido
 
 
 
-  validates_uniqueness_of :nome, :numero
 
   #antes tem que processar as doacoes dos candidatos
   def calcula_total_em_doacoes
