@@ -16,10 +16,10 @@ class Candidato
   field :numero,        :type=>String, :default=>nil
   field :cnpj,        :type=>String, :default=>nil
   field :candidato_a, :type=>String, :default=>nil
-  field :_total_em_doacoes, :type=>Float, :default=>nil
-  field :_total_em_doacoes_partido, :type=>Float, :default=>nil
-  field :_total_em_doacoes_pessoas_via_direta, :type=>Float, :default=>nil
-  field :_total_em_doacoes_pessoas_via_partido, :type=>Float, :default=>nil
+  field :_total_em_doacoes, :type=>Integer, :default=>nil
+  field :_total_em_doacoes_partido, :type=>Integer, :default=>nil
+  field :_total_em_doacoes_pessoas_via_direta, :type=>Integer, :default=>nil
+  field :_total_em_doacoes_pessoas_via_partido, :type=>Integer, :default=>nil
 
 
   field :ranking_total_em_doacoes, :type=>Integer, :default=>nil
@@ -133,6 +133,20 @@ class Candidato
   end
 
 
+  def self.calcula_total_em_doacoes tamanho_pagina=500
+
+    Candidato.all.update_all(:_total_em_doacoes=>0.0, 
+                             :_total_em_doacoes_partido=>0.0, 
+                             :_total_em_doacoes_pessoas_via_direta=>0.0, 
+                             :_total_em_doacoes_pessoas_via_partido=>0.0)
+
+    DadosUtil.percorrer_paginado(Candidato.all, tamanho_pagina) do |candidato|
+      candidato.calcula_total_em_doacoes
+      candidato.save!
+    end
+  end
+
+
   def calcula_total_em_doacoes
 
     self._total_em_doacoes = 0.0
@@ -142,7 +156,9 @@ class Candidato
 
 
     Doacao.do_candidato(self.id).each do |d|
+
       self._total_em_doacoes += d.valor
+
       if d.from_partido?
         self._total_em_doacoes_partido += d.valor
       elsif d.from_pessoa_via_partido?

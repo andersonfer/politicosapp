@@ -45,10 +45,7 @@ namespace :papp do
 
     puts "\n\n"
     puts "Calculando totais de doação para CANDIDATOS... "
-    DadosUtil.percorrer_paginado(Candidato.all, 100) do |candidato|
-      candidato.calcula_total_em_doacoes
-      candidato.save!
-    end
+    Candidato.calcula_total_em_doacoes(tam_pagina)
     print "OK"
 
     puts "\n\n"

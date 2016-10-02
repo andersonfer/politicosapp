@@ -32,44 +32,6 @@ class Doador
     end
   end
 
-  def self.carrega_doadores_para_deputado_federal tamanho_pagina=500
-
-    doadores = {}
-    doadores_para_salvar = []
-
-    CSV.foreach("doacoes_deputado_federal.csv") do |d|
-
-      doador = doadores[d[2]]
-
-      if doador.nil?
-        doador = Doador.new(:nome=>d[1], :cnpj_cpf=>d[2])
-        doadores[doador.cnpj_cpf] = doador
-        doadores_para_salvar << doador.as_document
-      end
-
-      if not d[4].blank?
-
-        doador = doadores[d[4]]
-
-        if doador.nil?
-          doador = Doador.new(:nome=>d[3], :cnpj_cpf=>d[4])
-          doadores[doador.cnpj_cpf] = doador
-          doadores_para_salvar << doador.as_document
-        end
-
-      end
-
-      if doadores_para_salvar.size > tamanho_pagina 
-        Doador.create!(doadores_para_salvar)
-        doadores_para_salvar = []
-        print "."
-      end
-
-    end
-
-    Doador.create!(doadores_para_salvar)
-
-  end
 
   def self.descobre_comites_financeiros
     cnpjs_comites = []
