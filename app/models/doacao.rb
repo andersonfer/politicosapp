@@ -100,8 +100,8 @@ class Doacao
 
     end
 
-    Doacao.create!(doacoes_para_salvar)
     Doador.create!(doadores_para_salvar)
+    Doacao.create!(doacoes_para_salvar)
 
 
 
