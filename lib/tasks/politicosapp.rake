@@ -20,14 +20,18 @@ namespace :papp do
     print "OK"
 
     puts "\n\n"
-    puts "Inserindo DOADORES. Cada ponto são #{tam_pagina}."
-    Doador.collection.drop
-    Doador.carrega_doadores_para_deputado_federal(tam_pagina)
+    puts "Inserindo DOAÇÕES e DOADORES. Cada ponto são #{tam_pagina} documentos."
+    Doacao.carrega_doacoes_e_doadores_deputado_federal(tam_pagina)
 
-    puts "\n\n"
-    puts "Inserindo DOAÇÕES. Cada ponto são #{tam_pagina}."
-    Doacao.collection.drop
-    Doacao.carrega_doacoes_dos_cantidatos_a_deputado_federal(tam_pagina)
+    # puts "\n\n"
+    # puts "Inserindo DOADORES. Cada ponto são #{tam_pagina}."
+    # Doador.collection.drop
+    # Doador.carrega_doadores_para_deputado_federal(tam_pagina)
+
+    # puts "\n\n"
+    # puts "Inserindo DOAÇÕES. Cada ponto são #{tam_pagina}."
+    # Doacao.collection.drop
+    # Doacao.carrega_doacoes_dos_cantidatos_a_deputado_federal(tam_pagina)
 
     puts "\n\n"
     print "Marcando eleitos... "
