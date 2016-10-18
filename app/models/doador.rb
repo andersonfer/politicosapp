@@ -6,6 +6,9 @@ class Doador
   field :cnpj_cpf, type:String, default:nil
 
   field :_total_em_doacoes, :type=>Float, :default=>nil
+  field :_total_em_doacoes_para_candidatos, :type=>Float, :default=>nil
+  field :_total_em_doacoes_para_partidos, :type=>Float, :default=>nil
+  field :_total_em_doacoes_fundo_partidario, :type=>Float, :default=>nil
 
   has_many :doacoes, class_name:'Doacao'
   belongs_to :partido
@@ -15,9 +18,20 @@ class Doador
 
   def calcula_total_em_doacoes
     self._total_em_doacoes = 0.0
+    self._total_em_doacoes_para_candidatos = 0.0
+    self._total_em_doacoes_para_partidos = 0.0
+    self._total_em_doacoes_fundo_partidario = 0.0
 
     Doacao.do_doador(self.id).each do |d|
       self._total_em_doacoes += d.valor
+      if d.para_candidato?
+        self._total_em_doacoes_para_candidatos += d.valor
+      elsif d.para_partido?
+        self._total_em_doacoes_para_partidos += d.valor
+      else
+        self._total_em_doacoes_fundo_partidario += d.valor
+      end
+
     end
 
   end

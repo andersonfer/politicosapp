@@ -22,7 +22,19 @@
   </th>
 
   <th style = "text-align:right;">
-    Total Doado
+    Doações para candidatos (R$)
+  </th>
+
+  <th style = "text-align:right;">
+    Doações para partidos (R$)
+  </th>
+
+  <th style = "text-align:right;">
+    Fundo Partidário (R$)
+  </th>
+
+  <th style = "text-align:right;">
+    Total Doado (R$)
   </th>
 
   <th ></th>
@@ -46,6 +58,18 @@
 
 
       <% end %>
+    </td>
+
+    <td style = "text-align:right;">
+      <%= total = number_to_currency(("%.2f" % (doador._total_em_doacoes_para_candidatos.to_f/100)), unit:'', separator: ",", delimiter: ".") %>
+    </td>
+
+    <td style = "text-align:right;">
+      <%= total = number_to_currency(("%.2f" % (doador._total_em_doacoes_para_partidos.to_f/100)), unit:'', separator: ",", delimiter: ".") %>
+    </td>
+
+    <td style = "text-align:right;">
+      <%= total = number_to_currency(("%.2f" % (doador._total_em_doacoes_para_partidos.to_f/100)), unit:'', separator: ",", delimiter: ".") %>
     </td>
 
 

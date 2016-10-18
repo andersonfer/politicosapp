@@ -9,6 +9,9 @@ TO.DO
 
 	. próximas tarefas
 		- separar as doações por tipo
+      - verificar o de partido e doador
+      - reprocessar as somas de partido e doadores
+
     - terminar de calcular os rankings de candidato
     - modelar estado
 

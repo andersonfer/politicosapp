@@ -30,6 +30,19 @@ class Doacao
   end
 
 
+  def from_fundo_partidario?
+    self.from_partido?
+  end
+
+  def para_candidato?
+    (self.doador_intermediario.nil? and not self.doador.comite_financeiro?)
+  end
+
+  def para_partido?
+    (not self.doador_intermediario.nil? and not self.doador.comite_financeiro?)
+  end
+
+
   def self.carrega_doacoes_e_doadores_deputado_federal tamanho_pagina=500
 
     Doador.collection.drop
@@ -87,7 +100,7 @@ class Doacao
 
       # salva um monte de doações e um monte de doadores
       if ( (doacoes_para_salvar.size + doadores_para_salvar.size) >= tamanho_pagina )
-        
+
         Doador.create!(doadores_para_salvar)
         doadores_para_salvar = []
 
