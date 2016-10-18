@@ -1,7 +1,5 @@
 TO.DO
 
-	. erro no processamento de doações. Tá quebrando no meio (pelo menos lá no heroku)
-
 	. eleitos
 		erro do RUBENS OTONI GOMIDE (GO) - tem 7077 no sistema e tem 7139 no TSE
 

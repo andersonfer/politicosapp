@@ -16,8 +16,11 @@
       Nome
     </th>
 
+    <th style="text-align:right;"> Fundo Partidário (R$)</th>
+    <th style="text-align:right;"> Doações para candidatos (R$)</th>
+    <th style="text-align:right;"> Doações para o partido (R$)</th>
 
-    <th style="text-align:right;">Total Investido (R$)</th>
+    <th style="text-align:right;">Total Utilizado (R$)</th>
 
     <th></th>
 
@@ -25,7 +28,7 @@
 
   </tr>
 
-  <% total = 0.0 %>
+  <% total = total_gastos_fundo_partidario = total_doacoes_recebidas_pelos_candidatos = total_doacoes_recebidas_pelo_partido = 0.0 %>
 
 
 <% @consulta_partidos.each_with_index do |partido,index| %>
@@ -40,8 +43,24 @@
     </td>
 
     <td style="text-align:right;">
-      <%= number_to_currency(("%.2f" % (partido._total_em_doacoes.to_f/100)), unit: "", separator: ",", delimiter: ".") %>
-      <% total += partido._total_em_doacoes.to_f %>
+      <%= number_to_currency(("%.2f" % (partido._gastos_fundo_partidario.to_f/100)), unit: "", separator: ",", delimiter: ".") %>
+      <% total_gastos_fundo_partidario += partido._gastos_fundo_partidario.to_f %>
+
+    </td>
+    <td style="text-align:right;">
+      <%= number_to_currency(("%.2f" % (partido._doacoes_recebidas_pelos_candidatos.to_f/100)), unit: "", separator: ",", delimiter: ".") %>
+      <% total_doacoes_recebidas_pelos_candidatos += partido._doacoes_recebidas_pelos_candidatos.to_f %>
+
+    </td>
+    <td style="text-align:right;">
+      <%= number_to_currency(("%.2f" % (partido._doacoes_recebidas_pelo_partido.to_f/100)), unit: "", separator: ",", delimiter: ".") %>
+      <% total_doacoes_recebidas_pelo_partido += partido._doacoes_recebidas_pelo_partido.to_f %>
+
+    </td>
+
+    <td style="text-align:right;">
+      <%= number_to_currency(("%.2f" % (partido._total_dinheiro_utilizado.to_f/100)), unit: "", separator: ",", delimiter: ".") %>
+      <% total += partido._total_dinheiro_utilizado.to_f %>
 
     </td>
 
@@ -56,10 +75,30 @@
 <%end%>
 
 <tr>
-  <td style="text-align:right;font-weight:bold;" colspan="3">
+
+  <td colspan="2"></td>
+  <td style="text-align:right;font-weight:bold;">
+    <%= number_to_currency(("%.2f" % (total_gastos_fundo_partidario/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+
+  </td>
+
+  <td style="text-align:right;font-weight:bold;">
+    <%= number_to_currency(("%.2f" % (total_doacoes_recebidas_pelos_candidatos/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+
+  </td>
+  <td style="text-align:right;font-weight:bold;">
+    <%= number_to_currency(("%.2f" % (total_doacoes_recebidas_pelo_partido/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
+
+  </td>
+
+
+
+  <td style="text-align:right;font-weight:bold;">
     <%= number_to_currency(("%.2f" % (total/100)), unit: "R$ ", separator: ",", delimiter: ".") %>
 
   </td>
+
+  <td></td>
 </tr>
 
 

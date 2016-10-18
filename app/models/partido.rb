@@ -6,7 +6,10 @@ class Partido
 
 
   field :nome,        :type=>String, :default=>nil
-  field :_total_em_doacoes, :type=>Float, :default=>nil
+  field :_total_dinheiro_utilizado, :type=>Float, :default=>nil
+  field :_gastos_fundo_partidario, :type=>Float, :default=>nil
+  field :_doacoes_recebidas_pelos_candidatos, :type=>Float, :default=>nil
+  field :_doacoes_recebidas_pelo_partido, :type=>Float, :default=>nil
   field :numero,        :type=>String, :default=>nil
 
 
@@ -14,10 +17,17 @@ class Partido
 
   #antes tem que processar as doacoes dos candidatos
   def calcula_total_em_doacoes
-    self._total_em_doacoes = 0.0
+    self._total_dinheiro_utilizado = 0.0
+    self._gastos_fundo_partidario = 0.0
+    self._total_em_doacoes_para_candidatos = 0.0
+    self._total_em_doacoes_via_partido = 0.0
 
     Candidato.do_partido(self.id).each do |c|
-      self._total_em_doacoes += c._total_em_doacoes
+      self._total_dinheiro_utilizado += c._total_em_doacoes
+      self._gastos_fundo_partidario += c._total_em_doacoes_partido
+      self._doacoes_recebidas_pelos_candidatos += c._total_em_doacoes_pessoas_via_direta
+      self._doacoes_recebidas_pelo_partido += c._total_em_doacoes_pessoas_via_partido
+
     end
 
   end
