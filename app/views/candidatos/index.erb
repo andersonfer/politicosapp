@@ -12,7 +12,7 @@
 <% content_for :lead do %>
   <%= @consulta_candidatos.count %> candidatos encontrados
   <% if partido %>
-    - <%= number_to_currency(("%.2f" % (partido._total_em_doacoes/100)), unit:'R$', separator: ",", delimiter: ".") %>
+    - <%= number_to_currency(("%.2f" % (partido._total_dinheiro_utilizado/100)), unit:'R$', separator: ",", delimiter: ".") %>
   <% end %>
   <br>
 <% end %>

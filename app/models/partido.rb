@@ -19,8 +19,8 @@ class Partido
   def calcula_total_em_doacoes
     self._total_dinheiro_utilizado = 0.0
     self._gastos_fundo_partidario = 0.0
-    self._total_em_doacoes_para_candidatos = 0.0
-    self._total_em_doacoes_via_partido = 0.0
+    self._doacoes_recebidas_pelos_candidatos = 0.0
+    self._doacoes_recebidas_pelo_partido = 0.0
 
     Candidato.do_partido(self.id).each do |c|
       self._total_dinheiro_utilizado += c._total_em_doacoes
