@@ -70,4 +70,25 @@ class NumerosController < ApplicationController
 
   end
 
+
+  def graficos
+
+    @dados_grafico1 = [['número de candidatos', 'nome da linha']]
+    @dados_grafico2 = [['Ranking', 'Doações recebidas']]
+
+    numero_eleitos = 0
+    total = 0
+
+    Candidato.desc(:_total_em_doacoes).each do |candidato|
+
+      numero_eleitos += 1 if candidato.eleito?
+      total += 1
+
+      percentual_de_influencia_do_capital = (100 * numero_eleitos.to_f / total).to_i
+      @dados_grafico1 << [total, percentual_de_influencia_do_capital]
+      @dados_grafico2 << [total, candidato._total_em_doacoes/100]
+
+    end
+  end
+
 end

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   namespace :numeros do
     get :medias
+    get :graficos
   end
 
   namespace :conteudo do

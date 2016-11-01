@@ -1,0 +1,53 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        
+        var i = 0;
+        var data1 = google.visualization.arrayToDataTable(<%= @dados_grafico1.to_json.html_safe %>);
+
+        var options1 = { title: 'Título gráfico',
+          
+                        hAxis: {showTextEvery: 1},
+  
+                        vAxes: {0: {viewWindowMode:'explicit',
+                                    viewWindow:{ max:100, min:0 },
+                                    gridlines: {color: 'transparent'}},
+                                1: {gridlines: {color: 'transparent'},
+                                    format:"#%"}},
+  
+                        series: {0: { targetAxisIndex: 0 },
+                                 1: { targetAxisIndex: 0 },
+                                 2: { targetAxisIndex: 1 }},
+  
+                        colors: ["orange"],
+  
+                        chartArea: { left:100, top:100, width:500, height:150 }};
+
+        var chart1 = new google.visualization.LineChart(document.getElementById('chart_id1'));
+        chart1.draw(data1, options1);
+
+
+        var data2 = google.visualization.arrayToDataTable(<%= @dados_grafico2.to_json.html_safe %>);
+
+        var options2 = {
+          title: 'Age vs. Weight comparison',
+          hAxis: {title: 'Ranking', minValue: 0, maxValue: 15},
+          vAxis: {title: 'Doações', minValue: 0, maxValue: 15},
+          legend: 'none'
+        };
+
+
+        var chart2 = new google.visualization.ScatterChart(document.getElementById('chart_id2'));
+        chart2.draw(data2, options2);
+
+      }
+</script>
+
+<div id="chart_id1" style="width: 800px; height: 300px;"></div>
+<div id="chart_id2" style="width: 800px; height: 300px;"></div>
+
