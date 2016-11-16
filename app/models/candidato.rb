@@ -48,6 +48,7 @@ class Candidato
   scope :com_numero, ->(num) {self.and(:numero=>num) }
   scope :do_estado, ->(est) {self.and(:estado=>est) }
   scope :eleitos, ->() {self.and(:eleito_em.ne=>nil) }
+  scope :nao_eleitos, ->() {self.and(:eleito_em=>nil) }
 
 
   validates_uniqueness_of :sequencial

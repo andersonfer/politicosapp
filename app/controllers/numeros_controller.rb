@@ -74,21 +74,73 @@ class NumerosController < ApplicationController
   def graficos
 
     @dados_grafico1 = [['número de candidatos', 'nome da linha']]
-    @dados_grafico2 = [['Ranking', 'Doações recebidas']]
+    @dados_grafico2 = [['', '']]
+    @dados_grafico3 = [["aa", "bb", { role: "style" } ]]
+    @dados_grafico4 = [["aa", "bb", { role: "style" } ]]
 
     numero_eleitos = 0
+    numero_eleitos_por_grupo = 0
+    doacoes_do_grupo = 0
+    tamanho_grupo = 150
     total = 0
+    doacoes_do_1o = 0
+    i = 0
 
-    Candidato.desc(:_total_em_doacoes).each do |candidato|
+    @dados_grafico5 = [['quem mais recebeu doações em $', 'eleitos', 'não-eleitos']]
+    hash_dados_grafico6 = {}
 
-      numero_eleitos += 1 if candidato.eleito?
+    Candidato.desc(:ranking_total_em_doacoes).to_a.reverse.each do |candidato|
+
+      qtde_de_100mil = candidato._total_em_doacoes / 10000000
+      hash_dados_grafico6["#{qtde_de_100mil}x100K"] = {'eleitos'=>0, 'nao_eleitos'=>0} if not hash_dados_grafico6["#{qtde_de_100mil}x100K"]
+      
+      if candidato.eleito?
+        hash_dados_grafico6["#{qtde_de_100mil}x100K"]['eleitos'] += 1
+        numero_eleitos += 1 
+        numero_eleitos_por_grupo += 1
+        cor = "gold"
+      else
+        hash_dados_grafico6["#{qtde_de_100mil}x100K"]['nao_eleitos'] += 1
+        cor = "silver"
+      end
+
       total += 1
 
       percentual_de_influencia_do_capital = (100 * numero_eleitos.to_f / total).to_i
       @dados_grafico1 << [total, percentual_de_influencia_do_capital]
-      @dados_grafico2 << [total, candidato._total_em_doacoes/100]
+      @dados_grafico2 << [candidato.ranking_total_em_doacoes, candidato._total_em_doacoes/100]
+
+      @dados_grafico3 << [percentual_de_influencia_do_capital, total , cor]
+
+
+      if i % tamanho_grupo == (tamanho_grupo-1)
+        @dados_grafico4 << [total, numero_eleitos_por_grupo.to_i, cor]
+        # @dados_grafico5 << ["#{i-(tamanho_grupo-2)}-#{i+1}: #{doacoes_do_grupo/100000}", numero_eleitos_por_grupo.to_i, (tamanho_grupo-numero_eleitos_por_grupo.to_i)]
+        @dados_grafico5 << ["#{doacoes_do_1o/100000} - #{candidato._total_em_doacoes/100000}", numero_eleitos_por_grupo.to_i, (tamanho_grupo-numero_eleitos_por_grupo.to_i)]
+        numero_eleitos_por_grupo = 0 
+        doacoes_do_grupo = 0
+
+      elsif i % tamanho_grupo == 0
+        doacoes_do_1o = candidato._total_em_doacoes
+      end
+
+      doacoes_do_grupo += candidato._total_em_doacoes
+      i += 1
 
     end
+
+    resto = i % tamanho_grupo
+
+    @dados_grafico5 << ["de #{ i - resto + 1 } a #{i}", numero_eleitos_por_grupo.to_i, (resto-numero_eleitos_por_grupo.to_i)]
+
+    @dados_grafico6 = [['quem mais recebeu doações em $', 'eleitos', 'não-eleitos']]
+    hash_dados_grafico6.each do |x, hash_info|
+      tot = hash_info['eleitos'] + hash_info['nao_eleitos']
+      @dados_grafico6 << [x, (100*hash_info['eleitos'].to_f).round/tot, (100*hash_info['nao_eleitos'].to_f).round/tot]
+    end
+
+    puts @dados_grafico6
+
   end
 
 end

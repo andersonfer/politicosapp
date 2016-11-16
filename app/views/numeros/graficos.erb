@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 
-      google.load("visualization", "1", {packages:["corechart"]});
+      google.load("visualization", "1", {packages:["corechart", "bar"]});
       google.setOnLoadCallback(drawChart);
 
       function drawChart() {
@@ -35,19 +35,128 @@
         var data2 = google.visualization.arrayToDataTable(<%= @dados_grafico2.to_json.html_safe %>);
 
         var options2 = {
-          title: 'Age vs. Weight comparison',
-          hAxis: {title: 'Ranking', minValue: 0, maxValue: 15},
+          title: '',
+          hAxis: {title: 'votos', minValue: 0, maxValue: 15},
           vAxis: {title: 'Doações', minValue: 0, maxValue: 15},
-          legend: 'none'
+          legend: 'none',
+          dataOpacity: 0.2
         };
 
 
         var chart2 = new google.visualization.ScatterChart(document.getElementById('chart_id2'));
         chart2.draw(data2, options2);
 
+
+
+
+        var data3 = google.visualization.arrayToDataTable(<%= @dados_grafico3.to_json.html_safe %>);
+
+        var options3 = {
+          title: "Percentual de eleitos X ranking",
+          width: 700,
+          height: 400,
+          legend: { position: "none" },
+        };
+
+        var chart3 = new google.visualization.BarChart(document.getElementById("chart_id3"));
+        chart3.draw(data3, options3);
+
+
+        var data4 = google.visualization.arrayToDataTable(<%= @dados_grafico4.to_json.html_safe %>);
+
+        var options4 = {
+          title: "Eleitos X mais ganharam $",
+          width: 700,
+          height: 400,
+          legend: { position: "none" },
+        };
+
+        var chart4 = new google.visualization.ColumnChart(document.getElementById("chart_id4"));
+        chart4.draw(data4, options4);
+
+
+
+
+
+
+
+
+        var data = google.visualization.arrayToDataTable(<%= @dados_grafico5.to_json.html_safe %>);
+
+        var options = {
+          chart: {
+            title: 'Population of Largest U.S. Cities',
+            subtitle: 'Based on most recent and previous census data'
+          },
+          isStacked: true,
+          hAxis: {
+            title: 'Quem mais ganhou doação em $',
+            minValue: 0,
+          },
+          vAxis: {
+            title: 'Eleitos e não eleitos em grupos de 150',
+            viewWindow: {
+              max: 150
+            },
+            color: 'green'
+          },
+          bars: 'horizontal',
+          axes: {
+            y: {
+              0: {side: 'right'}
+            }
+          }
+        };
+        var material = new google.visualization.ColumnChart(document.getElementById('chart_id5'));
+        material.draw(data, options);
+
+
+
+        var data2 = google.visualization.arrayToDataTable(<%= @dados_grafico6.to_json.html_safe %>);
+
+        var options2 = {
+          chart: {
+            title: 'Population of Largest U.S. Cities',
+            subtitle: 'Based on most recent and previous census data'
+          },
+          isStacked: true,
+          hAxis: {
+            title: 'Quem mais ganhou doação em $',
+            minValue: 0,
+          },
+          vAxis: {
+            title: 'Eleitos e não eleitos em grupos de 150',
+            viewWindow: {
+              max: 150
+            },
+            color: 'green'
+          },
+          bars: 'horizontal',
+          axes: {
+            y: {
+              0: {side: 'right'}
+            }
+          }
+        };
+        var material2 = new google.visualization.ColumnChart(document.getElementById('chart_id6'));
+        material2.draw(data2, options2);
+
+
+
+
+
+
+
+
+
+
       }
 </script>
 
 <div id="chart_id1" style="width: 800px; height: 300px;"></div>
 <div id="chart_id2" style="width: 800px; height: 300px;"></div>
+<div id="chart_id3" style="width: 800px; height: 300px;"></div>
+<div id="chart_id4" style="width: 800px; height: 300px;"></div>
+<div id="chart_id5" style="width: 800px; height: 500px;"></div>
+<div id="chart_id6" style="width: 800px; height: 500px;"></div>
 
